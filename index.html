@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
     --char: #0a0805;
@@ -1215,6 +1217,7 @@
   <button class="tab" onclick="switchTab('chefnotes', event)">Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
   <button class="tab" onclick="switchTab('fatigue', event)">Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
   <button class="tab" onclick="switchTab('bulkallergen', event)">Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
+  <button class="tab" onclick="switchTab('feedback', event)">Support</button>
   <button class="tab" onclick="switchTab('pricing', event)">Pricing</button>
 </nav>
 
@@ -1257,6 +1260,15 @@
           <option value="Side">Side</option>
           <option value="Small Plate">Small Plate / Tapa</option>
         </select>
+      </div>
+      <div class="input-group">
+        <label>Attach Dish Photo (optional)</label>
+        <input type="file" id="dish-image" accept="image/*" style="padding:10px;">
+        <div id="dish-image-preview" style="margin-top:10px;display:none;">
+          <img id="dish-image-thumb" style="max-width:160px;max-height:120px;border:1px solid var(--smoke);">
+          <button type="button" class="btn-small" onclick="clearDishImage()" style="margin-left:8px;vertical-align:top;">✕ REMOVE</button>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;">CLAUDE WILL SEE YOUR PHOTO AS INSPIRATION</div>
       </div>
       <button class="btn-fire" onclick="generateDish()"><span>⚡ Generate Dish Names</span></button>
     </div>
@@ -1323,6 +1335,14 @@
       <label>Currency Symbol</label>
       <input type="text" id="currency" placeholder="£" style="max-width: 80px;">
     </div>
+    <div class="input-group">
+      <label>Export Format</label>
+      <select id="menu-format">
+        <option value="html">HTML (on screen)</option>
+        <option value="pdf">PDF</option>
+        <option value="png">PNG Image</option>
+      </select>
+    </div>
   </div>
 
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
@@ -1340,8 +1360,11 @@
   </div>
 
   <div class="export-row" id="export-row" style="display:none;">
-    <button class="btn-ghost" onclick="printMenu()">↓ SAVE AS PDF</button>
+    <button class="btn-ghost" onclick="exportMenuPDF()">↓ DOWNLOAD PDF</button>
+    <button class="btn-ghost" onclick="exportMenuPNG()">🖼 DOWNLOAD PNG</button>
+    <button class="btn-ghost" onclick="exportMenuHTMLFile()">⬇ DOWNLOAD HTML</button>
     <button class="btn-ghost" onclick="copyMenuHTML()">⎘ COPY HTML</button>
+    <button class="btn-ghost" onclick="printMenu()">🖨 PRINT</button>
   </div>
 </div>
 
@@ -1355,6 +1378,15 @@
       <div class="input-group">
         <label>Paste Your Full Menu</label>
         <textarea id="psych-menu" style="min-height: 220px;" placeholder="Paste your menu here — dish names, descriptions, prices. The more detail the better..."></textarea>
+      </div>
+      <div class="input-group">
+        <label>Or Upload a Menu Photo/Scan</label>
+        <input type="file" id="psych-image" accept="image/*" style="padding:10px;">
+        <div id="psych-image-preview" style="margin-top:10px;display:none;">
+          <img id="psych-image-thumb" style="max-width:200px;max-height:160px;border:1px solid var(--smoke);">
+          <button type="button" class="btn-small" onclick="clearPsychImage()" style="margin-left:8px;vertical-align:top;">✕ REMOVE</button>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;">CLAUDE CAN READ MENU IMAGES DIRECTLY</div>
       </div>
       <button class="btn-fire" onclick="analyzeMenu()"><span>🧠 Analyse Menu</span></button>
       <div class="loading" id="psych-loading">
@@ -1809,6 +1841,58 @@
   </div>
 </div>
 
+<!-- ─── FEEDBACK / SUPPORT ────────────────────── -->
+<div id="panel-feedback" class="panel" style="position:relative;">
+  <div class="section-title">Support & Feedback</div>
+  <div class="section-sub">Bug? Feature idea? Billing question? Send it direct — goes straight to the founder.</div>
+
+  <div class="two-col">
+    <div>
+      <div class="input-group">
+        <label>Your Name</label>
+        <input type="text" id="fb-name" placeholder="e.g. Jane Smith">
+      </div>
+      <div class="input-group">
+        <label>Your Email (for reply)</label>
+        <input type="email" id="fb-email" placeholder="your@email.com">
+      </div>
+      <div class="input-group">
+        <label>Topic</label>
+        <select id="fb-topic">
+          <option value="Bug report">Bug report</option>
+          <option value="Feature request">Feature request</option>
+          <option value="Billing / subscription">Billing / subscription</option>
+          <option value="Account help">Account help</option>
+          <option value="General feedback">General feedback</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Message</label>
+        <textarea id="fb-message" style="min-height:200px;" placeholder="Tell us what's on your mind. Be as specific as you can — steps to reproduce, what you expected, what happened..."></textarea>
+      </div>
+      <button class="btn-fire" onclick="submitFeedback()"><span>📮 Send to Ember</span></button>
+      <div class="loading" id="fb-loading">
+        <div class="flame-loader"><span></span><span></span><span></span><span></span><span></span></div>
+        SENDING...
+      </div>
+    </div>
+    <div>
+      <div id="fb-output">
+        <div class="output-area">
+          <div class="placeholder">Your message will be delivered directly to the EMBER team at <span style="color:var(--gold);">keneamaechina@gmail.com</span>. We aim to reply within one working day.</div>
+          <div style="margin-top:20px;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:2px;line-height:1.8;">
+            ▸ BUG REPORTS — include steps to reproduce<br>
+            ▸ FEATURE IDEAS — tell us the problem you're solving<br>
+            ▸ BILLING — we'll sort it within 24h<br>
+            ▸ URGENT — email keneamaechina@gmail.com directly
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── PRICING PAGE ──────────────────────────── -->
 <div id="panel-pricing" class="panel">
   <div class="section-title">Plans & Pricing</div>
@@ -1921,11 +2005,11 @@ let userPlan = 'free'; // 'free' | 'flame' | 'inferno' | 'pyro'
 let dishUsageCount = 0;
 
 // ─── PLAN PERMISSIONS ───────────────────────────────────
-const pyroFeatures = ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'competitor', 'trends', 'upsell', 'roi', 'brandvoice', 'chefnotes', 'fatigue', 'bulkallergen'];
+const pyroFeatures = ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'competitor', 'trends', 'upsell', 'roi', 'brandvoice', 'chefnotes', 'fatigue', 'bulkallergen', 'feedback'];
 const planAccess = {
-  free:    ['dish'],
-  flame:   ['dish', 'menu', 'psych', 'seasonal', 'saved'],
-  inferno: ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr'],
+  free:    ['dish', 'feedback'],
+  flame:   ['dish', 'menu', 'psych', 'seasonal', 'saved', 'feedback'],
+  inferno: ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'feedback'],
   pyro:    pyroFeatures
 };
 
@@ -2099,12 +2183,24 @@ function switchTab(name, e) {
 }
 
 // ─── API HELPER ─────────────────────────────────────────
-async function callClaude(prompt, system = '') {
-  const messages = [{ role: 'user', content: prompt }];
+async function callClaude(prompt, system = '', images = []) {
+  let content;
+  if (images && images.length) {
+    content = [
+      ...images.map(img => ({
+        type: 'image',
+        source: { type: 'base64', media_type: img.mediaType, data: img.data }
+      })),
+      { type: 'text', text: prompt }
+    ];
+  } else {
+    content = prompt;
+  }
+
   const body = {
     model: 'claude-sonnet-4-20250514',
     max_tokens: 1500,
-    messages
+    messages: [{ role: 'user', content }]
   };
   if (system) body.system = system;
 
@@ -2117,6 +2213,45 @@ async function callClaude(prompt, system = '') {
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();
   return data.content[0].text;
+}
+
+// Read a File as base64 (no data: prefix) + media type
+function readImageAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) return resolve(null);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      const [meta, b64] = result.split(',');
+      const m = meta.match(/data:([^;]+);base64/);
+      resolve({ mediaType: m ? m[1] : 'image/jpeg', data: b64 });
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// Wire image preview
+function bindImagePreview(inputId, previewId, thumbId) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    const preview = document.getElementById(previewId);
+    const thumb = document.getElementById(thumbId);
+    if (!file) { preview.style.display = 'none'; return; }
+    thumb.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  });
+}
+
+function clearDishImage() {
+  document.getElementById('dish-image').value = '';
+  document.getElementById('dish-image-preview').style.display = 'none';
+}
+function clearPsychImage() {
+  document.getElementById('psych-image').value = '';
+  document.getElementById('psych-image-preview').style.display = 'none';
 }
 
 // ─── DISH USAGE GATE ────────────────────────────────────
@@ -2152,16 +2287,23 @@ async function generateDish() {
   const method = document.getElementById('dish-method').value.trim();
   const cuisine = document.getElementById('dish-cuisine').value;
   const course = document.getElementById('dish-course').value;
+  const imageFile = document.getElementById('dish-image').files[0];
 
-  if (!ingredients) return;
+  if (!ingredients && !imageFile) return;
 
   document.getElementById('dish-loading').classList.add('active');
   document.getElementById('dish-output').innerHTML = '';
 
   try {
-    const prompt = `You are a Michelin-star menu writer. Create 3 different dish name and description options.
+    const images = [];
+    if (imageFile) {
+      const img = await readImageAsBase64(imageFile);
+      if (img) images.push(img);
+    }
 
-Ingredients: ${ingredients}
+    const prompt = `You are a Michelin-star menu writer. Create 3 different dish name and description options.
+${images.length ? 'An image of the dish has been attached — use its visual cues (colour, plating, texture) to inform your descriptions.\n' : ''}
+Ingredients: ${ingredients || '(inferred from the attached image)'}
 ${method ? `Cooking method: ${method}` : ''}
 Cuisine: ${cuisine}
 Course: ${course}
@@ -2179,7 +2321,7 @@ For each option, respond ONLY in this JSON format:
   ]
 }`;
 
-    const raw = await callClaude(prompt);
+    const raw = await callClaude(prompt, '', images);
     const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
@@ -2295,6 +2437,7 @@ Respond ONLY in this JSON format:
     document.getElementById('menu-preview-area').style.display = 'flex';
     document.getElementById('export-row').style.display = 'flex';
     if (canAccess('saved')) document.getElementById('save-menu-btn').style.display = 'inline-flex';
+    maybeAutoExport();
 
   } catch(e) {
     document.getElementById('menu-preview-area').style.display = 'flex';
@@ -2304,10 +2447,10 @@ Respond ONLY in this JSON format:
   document.getElementById('menu-loading').classList.remove('active');
 }
 
-function printMenu() {
+function buildStandaloneMenuHTML() {
   const content = document.getElementById('menu-canvas').innerHTML;
-  const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>Menu</title>
+  const title = (window._lastGeneratedMenu?.name) || 'Menu';
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body { background: #0a0805; color: #f0e6d3; font-family: 'Cormorant Garamond', serif; padding: 60px; max-width: 700px; margin: 0 auto; }
@@ -2321,9 +2464,20 @@ function printMenu() {
     .menu-item-desc { font-style:italic; font-size:13px; color:#8a6a50; line-height:1.5; }
     .menu-item-price { font-family:'Space Mono',monospace; font-size:14px; color:#d4a017; }
     .menu-dots { flex:1; border-bottom:1px dotted #3d2e22; margin:0 8px 4px; min-width:20px; }
-  </style></head><body>${content}</body></html>`);
+    @media print { body { padding: 30px; } }
+  </style></head><body>${content}</body></html>`;
+}
+
+function slugifyMenuName() {
+  const n = (window._lastGeneratedMenu?.name || 'menu').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return n || 'menu';
+}
+
+function printMenu() {
+  const win = window.open('', '_blank');
+  win.document.write(buildStandaloneMenuHTML());
   win.document.close();
-  win.print();
+  setTimeout(() => win.print(), 500);
 }
 
 function copyMenuHTML() {
@@ -2334,6 +2488,97 @@ function copyMenuHTML() {
     btn.textContent = '✓ COPIED';
     setTimeout(() => btn.textContent = orig, 2000);
   });
+}
+
+function exportMenuHTMLFile() {
+  const html = buildStandaloneMenuHTML();
+  const blob = new Blob([html], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = slugifyMenuName() + '.html';
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
+
+async function exportMenuPNG() {
+  const btn = event?.target;
+  const orig = btn?.textContent;
+  try {
+    if (btn) btn.textContent = 'RENDERING…';
+    const node = document.getElementById('menu-canvas');
+    const canvas = await html2canvas(node, {
+      backgroundColor: '#1a1410',
+      scale: 2,
+      useCORS: true
+    });
+    const link = document.createElement('a');
+    link.download = slugifyMenuName() + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    if (btn) btn.textContent = '✓ DOWNLOADED';
+    setTimeout(() => { if (btn) btn.textContent = orig; }, 1800);
+  } catch (e) {
+    if (btn) btn.textContent = 'ERROR — TRY AGAIN';
+    setTimeout(() => { if (btn) btn.textContent = orig; }, 2000);
+  }
+}
+
+async function exportMenuPDF() {
+  const btn = event?.target;
+  const orig = btn?.textContent;
+  try {
+    if (btn) btn.textContent = 'RENDERING…';
+    const node = document.getElementById('menu-canvas');
+    const canvas = await html2canvas(node, {
+      backgroundColor: '#1a1410',
+      scale: 2,
+      useCORS: true
+    });
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    // A4 portrait in mm: 210x297
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgW = pageW - 20;
+    const imgH = (canvas.height * imgW) / canvas.width;
+
+    if (imgH <= pageH - 20) {
+      pdf.addImage(imgData, 'PNG', 10, 10, imgW, imgH);
+    } else {
+      // Paginate tall menus
+      let remaining = imgH;
+      let y = 10;
+      let sY = 0;
+      const pxPerMm = canvas.width / imgW;
+      while (remaining > 0) {
+        const sliceMm = Math.min(pageH - 20, remaining);
+        const slicePx = sliceMm * pxPerMm;
+        const slice = document.createElement('canvas');
+        slice.width = canvas.width;
+        slice.height = slicePx;
+        slice.getContext('2d').drawImage(canvas, 0, sY, canvas.width, slicePx, 0, 0, canvas.width, slicePx);
+        pdf.addImage(slice.toDataURL('image/png'), 'PNG', 10, y, imgW, sliceMm);
+        remaining -= sliceMm;
+        sY += slicePx;
+        if (remaining > 0) { pdf.addPage(); y = 10; }
+      }
+    }
+
+    pdf.save(slugifyMenuName() + '.pdf');
+    if (btn) btn.textContent = '✓ DOWNLOADED';
+    setTimeout(() => { if (btn) btn.textContent = orig; }, 1800);
+  } catch (e) {
+    if (btn) btn.textContent = 'ERROR — TRY AGAIN';
+    setTimeout(() => { if (btn) btn.textContent = orig; }, 2000);
+  }
+}
+
+// Auto-trigger export after generation based on selected format
+function maybeAutoExport() {
+  const fmt = document.getElementById('menu-format')?.value || 'html';
+  if (fmt === 'pdf') setTimeout(() => exportMenuPDF(), 350);
+  else if (fmt === 'png') setTimeout(() => exportMenuPNG(), 350);
 }
 
 // ─── SAVE MENUS ─────────────────────────────────────────
@@ -2437,16 +2682,22 @@ async function deleteSavedMenu(id) {
 // ─── MENU PSYCHOLOGY ────────────────────────────────────
 async function analyzeMenu() {
   const menu = document.getElementById('psych-menu').value.trim();
-  if (!menu) return;
+  const imageFile = document.getElementById('psych-image').files[0];
+  if (!menu && !imageFile) return;
 
   document.getElementById('psych-output').innerHTML = '';
   document.getElementById('psych-loading').classList.add('active');
 
   try {
-    const prompt = `You are a menu psychology expert. Analyse this menu and score it on key psychological factors.
+    const images = [];
+    if (imageFile) {
+      const img = await readImageAsBase64(imageFile);
+      if (img) images.push(img);
+    }
 
-Menu:
-${menu}
+    const prompt = `You are a menu psychology expert. Analyse this menu and score it on key psychological factors.
+${images.length ? 'A photo/scan of the menu has been attached — read dish names, descriptions, prices and layout directly from the image.\n' : ''}
+${menu ? `Menu:\n${menu}` : '(menu content is in the attached image)'}
 
 Analyse and respond ONLY in this JSON format:
 {
@@ -2463,7 +2714,7 @@ Analyse and respond ONLY in this JSON format:
 
 Scores are 0-100. Notes should be specific to their menu, 1 sentence each.`;
 
-    const raw = await callClaude(prompt);
+    const raw = await callClaude(prompt, '', images);
     const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
@@ -3378,6 +3629,101 @@ Respond ONLY in this JSON format:
   document.getElementById('bulk-loading').classList.remove('active');
 }
 
+// ─── FEEDBACK / SUPPORT ─────────────────────────────────
+async function submitFeedback() {
+  const name = document.getElementById('fb-name').value.trim();
+  const email = document.getElementById('fb-email').value.trim() || currentUser?.email || '';
+  const topic = document.getElementById('fb-topic').value;
+  const message = document.getElementById('fb-message').value.trim();
+  const output = document.getElementById('fb-output');
+
+  if (!message) {
+    output.innerHTML = `<div class="output-area"><div class="error-msg">Please write a message before sending.</div></div>`;
+    return;
+  }
+  if (!email) {
+    output.innerHTML = `<div class="output-area"><div class="error-msg">Please provide an email so we can reply.</div></div>`;
+    return;
+  }
+
+  document.getElementById('fb-loading').classList.add('active');
+  output.innerHTML = '';
+
+  const payload = {
+    name: name || '(not provided)',
+    email,
+    topic,
+    message,
+    user_id: currentUser?.id || null,
+    plan: userPlan,
+    user_agent: navigator.userAgent,
+    page: window.location.href,
+    sent_at: new Date().toISOString()
+  };
+
+  let emailOk = false;
+  let dbOk = false;
+
+  // 1. Try Netlify function (emails keneamaechina@gmail.com)
+  try {
+    const res = await fetch('/.netlify/functions/send-feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    emailOk = res.ok;
+  } catch (e) { emailOk = false; }
+
+  // 2. Also store in Supabase as a backup/log (best-effort)
+  try {
+    const { error } = await sb.from('feedback').insert({
+      user_id: currentUser?.id || null,
+      name: payload.name,
+      email: payload.email,
+      topic: payload.topic,
+      message: payload.message,
+      plan: payload.plan,
+      user_agent: payload.user_agent,
+      page: payload.page
+    });
+    dbOk = !error;
+  } catch (e) { dbOk = false; }
+
+  document.getElementById('fb-loading').classList.remove('active');
+
+  if (emailOk || dbOk) {
+    output.innerHTML = `
+      <div class="output-area" style="border-left-color:var(--green);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--green);margin-bottom:8px;">✓ MESSAGE RECEIVED</div>
+        <div style="font-size:15px;font-style:italic;color:var(--cream);line-height:1.6;">
+          Thanks ${payload.name === '(not provided)' ? '' : payload.name} — your ${topic.toLowerCase()} has been sent to the EMBER team.
+          ${emailOk ? 'We\'ll reply to <strong style="color:var(--gold);">' + email + '</strong> within one working day.' : 'Stored in our system — we\'ll reach out shortly.'}
+        </div>
+        <div style="margin-top:20px;">
+          <button class="btn-small" onclick="resetFeedbackForm()">SEND ANOTHER</button>
+        </div>
+      </div>`;
+    // Clear form
+    document.getElementById('fb-name').value = '';
+    document.getElementById('fb-message').value = '';
+  } else {
+    output.innerHTML = `
+      <div class="output-area">
+        <div class="error-msg">Couldn't deliver your message. Please email keneamaechina@gmail.com directly.</div>
+        <div style="margin-top:12px;">
+          <button class="btn-small" onclick="submitFeedback()">RETRY</button>
+        </div>
+      </div>`;
+  }
+}
+
+function resetFeedbackForm() {
+  document.getElementById('fb-output').innerHTML = `
+    <div class="output-area">
+      <div class="placeholder">Your message will be delivered directly to the EMBER team at <span style="color:var(--gold);">keneamaechina@gmail.com</span>. We aim to reply within one working day.</div>
+    </div>`;
+}
+
 // ─── PAYPAL SUBSCRIPTION ────────────────────────────────
 function startCheckout(tier) {
   if (!currentUser) { showAuthModal(); return; }
@@ -3394,6 +3740,18 @@ function startCheckout(tier) {
 
 // ─── INIT ────────────────────────────────────────────────
 initAuth();
+bindImagePreview('dish-image', 'dish-image-preview', 'dish-image-thumb');
+bindImagePreview('psych-image', 'psych-image-preview', 'psych-image-thumb');
+
+// Pre-fill feedback email with signed-in user email when the tab is opened
+document.addEventListener('click', (e) => {
+  if (e.target?.getAttribute?.('onclick')?.includes("'feedback'")) {
+    setTimeout(() => {
+      const emailInput = document.getElementById('fb-email');
+      if (emailInput && !emailInput.value && currentUser?.email) emailInput.value = currentUser.email;
+    }, 50);
+  }
+});
 </script>
 </body>
 </html>
