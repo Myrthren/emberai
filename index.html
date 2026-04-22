@@ -782,21 +782,196 @@
     flex-wrap: wrap;
   }
 
-  /* ─── FREE TRIAL PILL ────────────────────── */
+  /* ─── FREE TRIAL PILL (per-tool, above action button) ───────── */
   .trial-pill {
     display: none;
-    align-items: center;
-    gap: 8px;
+    align-items: stretch;
+    gap: 14px;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 8px 14px;
+    padding: 12px 16px;
     border: 1px solid var(--gold);
     color: var(--gold);
-    background: rgba(212,160,23,0.06);
+    background: linear-gradient(135deg, rgba(212,160,23,0.10), rgba(201,74,26,0.04));
     margin-bottom: 16px;
-    width: fit-content;
+    max-width: 560px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(212,160,23,0.15), 0 4px 18px rgba(0,0,0,0.25);
+  }
+  .trial-pill .tp-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    flex: 1;
+  }
+  .trial-pill .tp-head { display:flex; align-items:center; gap:8px; }
+  .trial-pill .tp-dot {
+    display:inline-block; width:8px; height:8px; border-radius:50%;
+    background: var(--gold); box-shadow: 0 0 10px var(--gold);
+    animation: trialPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes trialPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .trial-pill .tp-label { color: var(--cream); letter-spacing: 2.5px; font-size:10px; }
+  .trial-pill .tp-count { color: var(--gold); font-weight:bold; }
+  .trial-pill .tp-bar {
+    height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; width: 100%;
+  }
+  .trial-pill .tp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--flame));
+    transition: width 0.35s ease;
+  }
+  .trial-pill .tp-cta {
+    background: linear-gradient(135deg, var(--ember), var(--flame));
+    color: #0a0805;
+    border: none;
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    align-self: center;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .trial-pill .tp-cta:hover { filter: brightness(1.15); }
+
+  .trial-pill.warning {
+    border-color: var(--flame);
+    color: var(--flame);
+    background: linear-gradient(135deg, rgba(201,74,26,0.18), rgba(201,74,26,0.06));
+    box-shadow: 0 0 0 1px rgba(201,74,26,0.25), 0 4px 18px rgba(201,74,26,0.15);
+  }
+  .trial-pill.warning .tp-dot { background: var(--flame); box-shadow: 0 0 10px var(--flame); }
+  .trial-pill.warning .tp-bar-fill { background: linear-gradient(90deg, var(--flame), #ff6b35); }
+
+  .trial-pill.exhausted {
+    border-color: var(--ember);
+    color: var(--cream);
+    background: linear-gradient(135deg, rgba(201,74,26,0.25), rgba(201,74,26,0.08));
+  }
+  .trial-pill.exhausted .tp-dot { background: var(--ember); box-shadow: 0 0 12px var(--ember); animation:none; }
+  .trial-pill.exhausted .tp-bar-fill { width: 100% !important; background: var(--ember); }
+
+  /* ─── GLOBAL TRIAL STATUS BANNER (sticky, under header) ───────── */
+  .trial-banner {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    background: linear-gradient(90deg, rgba(10,8,5,0.96), rgba(20,14,8,0.96));
+    border-bottom: 1px solid rgba(212,160,23,0.25);
+    padding: 10px 48px;
+    backdrop-filter: blur(6px);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .trial-banner.visible { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .trial-banner .tb-label { color: var(--gold); display:flex; align-items:center; gap:8px; font-weight:bold; }
+  .trial-banner .tb-dot { width:6px; height:6px; border-radius:50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: trialPulse 1.8s ease-in-out infinite; }
+  .trial-banner .tb-meters { display:flex; gap:14px; flex:1; flex-wrap: wrap; }
+  .trial-banner .tb-meter { display:flex; align-items:center; gap:8px; min-width: 140px; }
+  .trial-banner .tb-name { color: var(--dim); font-size: 9px; }
+  .trial-banner .tb-bar { width: 50px; height: 3px; background: rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
+  .trial-banner .tb-bar-fill { height:100%; background: linear-gradient(90deg, var(--gold), var(--flame)); transition: width 0.35s ease; }
+  .trial-banner .tb-count { color: var(--cream); font-size: 10px; font-weight: bold; min-width: 24px; }
+  .trial-banner .tb-count.zero { color: var(--ember); }
+  .trial-banner .tb-cta {
+    background: linear-gradient(135deg, var(--ember), var(--flame));
+    color: #0a0805;
+    border: none;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .trial-banner .tb-cta:hover { filter: brightness(1.15); }
+  .trial-banner .tb-close {
+    background: none; border: none; color: var(--dim); cursor: pointer; font-size: 14px; padding: 0 4px;
+  }
+  @media (max-width: 900px) {
+    .trial-banner { padding: 10px 20px; }
+    .trial-banner .tb-meter { min-width: 110px; }
+  }
+
+  /* ─── POST-USE SUCCESS TOAST (bottom-right) ─────────────────── */
+  #trial-toast-container {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .trial-toast {
+    pointer-events: auto;
+    min-width: 300px;
+    max-width: 380px;
+    background: linear-gradient(135deg, rgba(20,14,8,0.98), rgba(10,8,5,0.98));
+    border: 1px solid var(--gold);
+    border-left: 3px solid var(--gold);
+    color: var(--cream);
+    padding: 14px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,160,23,0.15);
+    animation: toastIn 0.28s ease-out;
+  }
+  .trial-toast.final { border-color: var(--ember); border-left-color: var(--ember); }
+  .trial-toast .tt-row { display:flex; align-items:center; gap:10px; margin-bottom: 8px; }
+  .trial-toast .tt-tick { color: var(--gold); font-size:14px; }
+  .trial-toast .tt-title { color: var(--cream); font-weight:bold; text-transform: uppercase; letter-spacing: 1.5px; font-size: 10px; }
+  .trial-toast .tt-msg { color: var(--dim); line-height: 1.5; margin-bottom: 10px; text-transform: none; font-family: Georgia, serif; font-size: 13px; letter-spacing: 0.3px; }
+  .trial-toast .tt-msg strong { color: var(--gold); }
+  .trial-toast.final .tt-msg strong { color: var(--flame); }
+  .trial-toast .tt-actions { display:flex; gap:8px; }
+  .trial-toast .tt-upgrade {
+    background: linear-gradient(135deg, var(--ember), var(--flame));
+    color: #0a0805; border: none; padding: 7px 12px;
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; font-weight: bold; cursor:pointer;
+    flex:1;
+  }
+  .trial-toast .tt-upgrade:hover { filter: brightness(1.15); }
+  .trial-toast .tt-dismiss {
+    background: transparent; color: var(--dim); border: 1px solid var(--smoke);
+    padding: 7px 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; cursor: pointer;
+  }
+  @keyframes toastIn { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes toastOut { to { transform: translateY(12px); opacity: 0; } }
+  .trial-toast.leaving { animation: toastOut 0.22s ease-in forwards; }
+
+  /* ─── NAV TAB: small counter for free-trial tools ───────────── */
+  .tab .tab-trial-count {
+    display: none;
+    margin-left: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    background: rgba(212,160,23,0.12);
+    border: 1px solid rgba(212,160,23,0.35);
+    padding: 1px 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+  .tab .tab-trial-count.zero { color: var(--ember); background: rgba(201,74,26,0.15); border-color: rgba(201,74,26,0.4); }
+
+  /* Plan badge — stronger styling when FREE TRIAL */
+  .user-plan.trial-badge {
+    color: var(--gold) !important;
+    border-color: var(--gold) !important;
+    background: rgba(212,160,23,0.08);
   }
 
   /* ─── ERROR ──────────────────────────────── */
@@ -1116,12 +1291,19 @@
     <div class="modal-title">CHOOSE YOUR PLAN</div>
     <div class="modal-sub">Unlock the full power of EMBER</div>
 
+    <!-- Value-prop band -->
+    <div style="margin:8px auto 28px;max-width:780px;padding:14px 18px;border:1px solid var(--gold);background:linear-gradient(135deg,rgba(212,160,23,0.10),rgba(201,74,26,0.04));border-radius:2px;text-align:center;font-family:Georgia,serif;color:var(--cream);font-size:14px;line-height:1.65;">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;">UPGRADE IN UNDER A MINUTE</div>
+      One great dish description can earn its cost back on the first table.<br>
+      <strong style="color:var(--gold);">Flame pays for itself at roughly 43p/day</strong> — about a third of a coffee.
+    </div>
+
     <div class="pricing-grid">
       <!-- Free -->
       <div class="pricing-card">
         <div class="pricing-tier">Free Trial</div>
         <div class="pricing-price free">£0</div>
-        <div class="pricing-period">FOREVER</div>
+        <div class="pricing-period">LIMITED · 2 USES EACH</div>
         <ul class="pricing-features">
           <li class="included">2× Dish Creator</li>
           <li class="included">2× Menu Builder</li>
@@ -1138,24 +1320,24 @@
 
       <!-- Flame -->
       <div class="pricing-card featured">
-        <div class="pricing-featured-badge">POPULAR</div>
+        <div class="pricing-featured-badge">MOST POPULAR</div>
         <div class="pricing-tier">Flame</div>
         <div class="pricing-price flame-col">£12<span style="font-size:24px;">.99</span></div>
-        <div class="pricing-period">PER MONTH</div>
+        <div class="pricing-period">PER MONTH · ≈ 43P/DAY</div>
         <ul class="pricing-features">
-          <li class="included">Unlimited dish descriptions</li>
-          <li class="included">Menu builder</li>
-          <li class="included">Menu psychology</li>
-          <li class="included">Seasonal ideas</li>
+          <li class="included"><strong>Unlimited</strong> dish descriptions</li>
+          <li class="included"><strong>Unlimited</strong> menu builder runs</li>
+          <li class="included"><strong>Unlimited</strong> menu psychology scans</li>
+          <li class="included"><strong>Unlimited</strong> seasonal ideas</li>
           <li class="included">Save up to 5 menus</li>
-          <li>Translation</li>
-          <li>Allergen tagger</li>
-          <li>Price optimiser</li>
-          <li>QR builder</li>
+          <li class="included">PDF / PNG / HTML exports</li>
+          <li class="included">Image attachments (dish + menu photos)</li>
+          <li class="included">Cancel anytime</li>
         </ul>
         <button class="btn-fire" style="width:100%;justify-content:center;" onclick="startCheckout('flame')">
           <span>SUBSCRIBE — £12.99</span>
         </button>
+        <div style="margin-top:10px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);text-align:center;">CANCEL ANYTIME · INSTANT ACCESS</div>
       </div>
 
       <!-- Inferno -->
@@ -1219,12 +1401,15 @@
   </div>
 </header>
 
+<!-- ─── GLOBAL FREE TRIAL STATUS BANNER ────────── -->
+<div class="trial-banner" id="trial-banner"></div>
+
 <!-- ─── NAVIGATION ────────────────────────────── -->
 <nav class="nav-tabs" id="main-nav">
-  <button class="tab active" onclick="switchTab('dish', event)">Dish Creator</button>
-  <button class="tab" onclick="switchTab('menu', event)">Menu Builder <span class="lock-icon" id="lock-menu">🔒</span></button>
-  <button class="tab" onclick="switchTab('psych', event)">Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span></button>
-  <button class="tab" onclick="switchTab('seasonal', event)">Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span></button>
+  <button class="tab active" onclick="switchTab('dish', event)">Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
+  <button class="tab" onclick="switchTab('menu', event)">Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
+  <button class="tab" onclick="switchTab('psych', event)">Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
+  <button class="tab" onclick="switchTab('seasonal', event)">Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
   <button class="tab" onclick="switchTab('saved', event)">Saved Menus <span class="lock-icon" id="lock-saved">🔒</span></button>
   <button class="tab" onclick="switchTab('translate', event)">Translation <span class="lock-icon" id="lock-translate">🔒</span></button>
   <button class="tab" onclick="switchTab('allergen', event)">Allergens <span class="lock-icon" id="lock-allergen">🔒</span></button>
@@ -1923,11 +2108,18 @@
   <div class="section-title">Plans & Pricing</div>
   <div class="section-sub">One tool. Every menu. Serious results.</div>
 
+  <!-- Value-prop band -->
+  <div style="margin:0 auto 32px;max-width:820px;padding:16px 20px;border:1px solid var(--gold);background:linear-gradient(135deg,rgba(212,160,23,0.10),rgba(201,74,26,0.04));border-radius:2px;text-align:center;font-family:Georgia,serif;color:var(--cream);font-size:15px;line-height:1.7;">
+    <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:8px;">LESS THAN A COFFEE</div>
+    One great dish description pays for <strong style="color:var(--gold);">a month of Flame</strong> at the first table that orders it.<br>
+    <span style="color:var(--dim);font-size:13px;">£12.99/mo = ≈ 43p/day · cancel anytime · no contract</span>
+  </div>
+
   <div class="pricing-grid">
     <div class="pricing-card">
       <div class="pricing-tier">Free Trial</div>
       <div class="pricing-price free">£0</div>
-      <div class="pricing-period">FOREVER · NO CARD</div>
+      <div class="pricing-period">LIMITED · 2 USES EACH</div>
       <ul class="pricing-features">
         <li class="included">2× Dish Creator</li>
         <li class="included">2× Menu Builder</li>
@@ -1943,24 +2135,24 @@
     </div>
 
     <div class="pricing-card featured">
-      <div class="pricing-featured-badge">POPULAR</div>
+      <div class="pricing-featured-badge">MOST POPULAR</div>
       <div class="pricing-tier">Flame</div>
       <div class="pricing-price flame-col">£12<span style="font-size:24px;">.99</span></div>
-      <div class="pricing-period">PER MONTH</div>
+      <div class="pricing-period">PER MONTH · ≈ 43P/DAY</div>
       <ul class="pricing-features">
-        <li class="included">Unlimited dish descriptions</li>
-        <li class="included">Menu builder</li>
-        <li class="included">Menu psychology</li>
-        <li class="included">Seasonal ideas</li>
+        <li class="included"><strong>Unlimited</strong> dish descriptions</li>
+        <li class="included"><strong>Unlimited</strong> menu builder runs</li>
+        <li class="included"><strong>Unlimited</strong> menu psychology scans</li>
+        <li class="included"><strong>Unlimited</strong> seasonal ideas</li>
         <li class="included">Save up to 5 menus</li>
-        <li>Translation</li>
-        <li>Allergen tagger</li>
-        <li>Price optimiser</li>
-        <li>QR builder</li>
+        <li class="included">PDF / PNG / HTML exports</li>
+        <li class="included">Image attachments (dish + menu photos)</li>
+        <li class="included">Cancel anytime</li>
       </ul>
       <button class="btn-fire" style="width:100%;justify-content:center;" onclick="startCheckout('flame')">
         <span>GET FLAME — £12.99/mo</span>
       </button>
+      <div style="margin-top:10px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);text-align:center;">CANCEL ANYTIME · INSTANT ACCESS</div>
     </div>
 
     <div class="pricing-card">
@@ -2066,6 +2258,7 @@ async function initAuth() {
 }
 
 async function setUser(user) {
+  const prevUserId = currentUser?.id;
   currentUser = user;
 
   // Load plan from Supabase
@@ -2074,6 +2267,9 @@ async function setUser(user) {
 
   // Load all-time tool usage
   await loadToolUsage();
+
+  // If this is a new sign-in (different user) show the trial banner again
+  if (prevUserId !== user.id) resetTrialBannerDismissal();
 
   updateHeaderAuth();
   updateLockIcons();
@@ -2092,6 +2288,7 @@ function clearUser() {
   currentUser = null;
   userPlan = 'free';
   toolUsage = {};
+  resetTrialBannerDismissal();
   updateHeaderAuth();
   updateLockIcons();
   updateFreeTrialDisplays();
@@ -2102,11 +2299,13 @@ const ADMIN_EMAIL = 'keneamaechina@gmail.com';
 function updateHeaderAuth() {
   const el = document.getElementById('header-auth');
   if (currentUser) {
-    const planLabel = userPlan.charAt(0).toUpperCase() + userPlan.slice(1);
     const isAdmin = currentUser.email === ADMIN_EMAIL;
+    const onTrial = !isAdmin && userPlan === 'free';
+    const planLabel = onTrial ? 'Free Trial' : userPlan.charAt(0).toUpperCase() + userPlan.slice(1);
+    const planClass = onTrial ? 'user-plan trial-badge' : 'user-plan';
     el.innerHTML = `
       <div class="user-badge">
-        <span class="user-plan" style="${isAdmin ? 'border-color:var(--gold);color:var(--gold);' : ''}">${planLabel}${isAdmin ? ' ⚡' : ''}</span>
+        <span class="${planClass}" style="${isAdmin ? 'border-color:var(--gold);color:var(--gold);' : ''}">${planLabel}${isAdmin ? ' ⚡' : ''}</span>
         <span class="user-email">${currentUser.email}</span>
         ${isAdmin ? `
           <select onchange="adminSwitchPlan(this.value)" style="background:var(--ash);border:1px solid var(--gold);color:var(--gold);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;padding:6px 10px;cursor:pointer;outline:none;">
@@ -2336,24 +2535,164 @@ async function incrementToolUsage(tool) {
   } catch (e) { /* non-fatal */ }
 
   updateFreeTrialDisplays();
+
+  // Post-use persuasion toast — only for free-tier users
+  const remaining = freeUsesRemaining(tool);
+  showTrialToast(tool, remaining);
 }
 
 function updateFreeTrialDisplays() {
-  // Render a "FREE TRIAL · X USES LEFT" pill above each limited tool's primary action.
+  const onTrial = currentUser && isFreeTier();
+
+  // ── Per-tool pills (above each action button) ──
   Object.keys(FREE_TRIAL_LIMITS).forEach(tool => {
     const el = document.getElementById('trial-pill-' + tool);
     if (!el) return;
-    if (!currentUser || !isFreeTier()) {
-      el.style.display = 'none';
-      return;
-    }
+    if (!onTrial) { el.style.display = 'none'; el.className = 'trial-pill'; return; }
+
     const left = freeUsesRemaining(tool);
     const total = FREE_TRIAL_LIMITS[tool];
-    el.style.display = 'inline-flex';
-    el.innerHTML = left > 0
-      ? `<span style="color:var(--gold);">✦</span> FREE TRIAL · ${left}/${total} ${FREE_TRIAL_TOOL_LABELS[tool].toUpperCase()} USES LEFT`
-      : `<span style="color:var(--ember);">✕</span> FREE TRIAL EXHAUSTED — <a onclick="showUpgradeModal()" style="color:var(--flame);cursor:pointer;text-decoration:underline;">UPGRADE</a>`;
+    const pct = Math.round((left / total) * 100);
+    const label = FREE_TRIAL_TOOL_LABELS[tool].toUpperCase();
+
+    let cls = 'trial-pill';
+    if (left === 0) cls += ' exhausted';
+    else if (left === 1) cls += ' warning';
+
+    el.className = cls;
+    el.style.display = 'flex';
+
+    if (left === 0) {
+      el.innerHTML = `
+        <div class="tp-left">
+          <div class="tp-head">
+            <span class="tp-dot"></span>
+            <span class="tp-label">TRIAL EXHAUSTED</span>
+          </div>
+          <div style="color:var(--dim);text-transform:none;font-family:Georgia,serif;letter-spacing:0.3px;font-size:12px;">You've used all ${total} free ${FREE_TRIAL_TOOL_LABELS[tool]} runs. Upgrade to Flame for unlimited.</div>
+          <div class="tp-bar"><div class="tp-bar-fill" style="width:100%;"></div></div>
+        </div>
+        <button class="tp-cta" onclick="showUpgradeModal()">UPGRADE →</button>`;
+    } else {
+      const subline = left === 1
+        ? `Last free run — upgrade to keep going.`
+        : `Then upgrade to Flame for unlimited · £12.99/mo`;
+      el.innerHTML = `
+        <div class="tp-left">
+          <div class="tp-head">
+            <span class="tp-dot"></span>
+            <span class="tp-label">FREE TRIAL · <span class="tp-count">${left}/${total}</span> ${label} ${left === 1 ? 'USE LEFT' : 'USES LEFT'}</span>
+          </div>
+          <div class="tp-bar"><div class="tp-bar-fill" style="width:${pct}%;"></div></div>
+          <div style="color:var(--dim);text-transform:none;font-family:Georgia,serif;letter-spacing:0.3px;font-size:11px;">${subline}</div>
+        </div>
+        <button class="tp-cta" onclick="showUpgradeModal()">UPGRADE</button>`;
+    }
   });
+
+  // ── Global banner (under header) ──
+  updateTrialBanner();
+
+  // ── Nav tab counters ──
+  Object.keys(FREE_TRIAL_LIMITS).forEach(tool => {
+    const el = document.getElementById('tabcount-' + tool);
+    if (!el) return;
+    if (!onTrial) { el.style.display = 'none'; return; }
+    const left = freeUsesRemaining(tool);
+    const total = FREE_TRIAL_LIMITS[tool];
+    el.style.display = 'inline-block';
+    el.textContent = `${left}/${total}`;
+    el.classList.toggle('zero', left === 0);
+  });
+}
+
+function updateTrialBanner() {
+  const banner = document.getElementById('trial-banner');
+  if (!banner) return;
+  const onTrial = currentUser && isFreeTier();
+  if (!onTrial || localStorage.getItem('ember_trial_banner_dismissed') === '1') {
+    banner.classList.remove('visible');
+    return;
+  }
+
+  const tools = Object.keys(FREE_TRIAL_LIMITS);
+  const totalLeft = tools.reduce((s, t) => s + freeUsesRemaining(t), 0);
+  const totalQuota = tools.reduce((s, t) => s + FREE_TRIAL_LIMITS[t], 0);
+  const allExhausted = totalLeft === 0;
+
+  const meters = tools.map(t => {
+    const left = freeUsesRemaining(t);
+    const total = FREE_TRIAL_LIMITS[t];
+    const pct = Math.round((left / total) * 100);
+    return `
+      <div class="tb-meter" title="${FREE_TRIAL_TOOL_LABELS[t]}: ${left} of ${total} free uses left">
+        <span class="tb-name">${FREE_TRIAL_TOOL_LABELS[t]}</span>
+        <div class="tb-bar"><div class="tb-bar-fill" style="width:${pct}%;"></div></div>
+        <span class="tb-count ${left===0?'zero':''}">${left}/${total}</span>
+      </div>`;
+  }).join('');
+
+  const headline = allExhausted
+    ? `<span style="color:var(--flame);">FREE TRIAL EXHAUSTED</span>`
+    : `FREE TRIAL · <span style="color:var(--cream);">${totalLeft}/${totalQuota}</span> USES LEFT`;
+
+  banner.innerHTML = `
+    <div class="tb-label"><span class="tb-dot"></span> ${headline}</div>
+    <div class="tb-meters">${meters}</div>
+    <button class="tb-cta" onclick="showUpgradeModal()">${allExhausted ? 'UPGRADE NOW' : 'GO UNLIMITED'} — £12.99/mo</button>
+    <button class="tb-close" onclick="dismissTrialBanner()" title="Hide">✕</button>
+  `;
+  banner.classList.add('visible');
+}
+
+function dismissTrialBanner() {
+  localStorage.setItem('ember_trial_banner_dismissed', '1');
+  document.getElementById('trial-banner')?.classList.remove('visible');
+}
+
+// Reset the "dismissed" flag on sign out / sign in so returning users see it again
+function resetTrialBannerDismissal() {
+  localStorage.removeItem('ember_trial_banner_dismissed');
+}
+
+// ── Post-use success toast ──
+function showTrialToast(tool, remaining) {
+  const container = document.getElementById('trial-toast-container');
+  if (!container) return;
+  const label = FREE_TRIAL_TOOL_LABELS[tool] || tool;
+  const total = FREE_TRIAL_LIMITS[tool] ?? 0;
+  const isFinal = remaining === 0;
+  const isLast = remaining === 1;
+
+  const toast = document.createElement('div');
+  toast.className = 'trial-toast' + (isFinal ? ' final' : '');
+
+  const title = isFinal ? 'FREE TRIAL USED UP' : (isLast ? 'ONE FREE RUN LEFT' : `${label.toUpperCase()} · ${remaining}/${total} LEFT`);
+  const msg = isFinal
+    ? `You've used all ${total} free <strong>${label}</strong> runs. Unlock <strong>unlimited</strong> on Flame — £12.99/month (≈ 43p/day).`
+    : (isLast
+        ? `That was your ${total - remaining}${total - remaining === 1 ? 'st' : 'nd'} free <strong>${label}</strong> run. One more, then it's £12.99/mo for unlimited.`
+        : `<strong>${remaining}</strong> free <strong>${label}</strong> ${remaining === 1 ? 'run' : 'runs'} left. Skip the limit — unlimited on Flame for £12.99/mo.`);
+
+  toast.innerHTML = `
+    <div class="tt-row">
+      <span class="tt-tick">${isFinal ? '✕' : '✓'}</span>
+      <span class="tt-title">${title}</span>
+    </div>
+    <div class="tt-msg">${msg}</div>
+    <div class="tt-actions">
+      <button class="tt-upgrade" onclick="showUpgradeModal();this.closest('.trial-toast').remove();">${isFinal ? 'UPGRADE NOW' : 'SEE PLANS'}</button>
+      <button class="tt-dismiss" onclick="this.closest('.trial-toast').classList.add('leaving');setTimeout(()=>this.closest('.trial-toast')?.remove(),220);">DISMISS</button>
+    </div>`;
+  container.appendChild(toast);
+
+  // Auto-dismiss after 10s (final/last stay longer — 16s)
+  const ttl = (isFinal || isLast) ? 16000 : 10000;
+  setTimeout(() => {
+    if (!toast.isConnected) return;
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 220);
+  }, ttl);
 }
 
 // ─── DISH CREATOR ───────────────────────────────────────
@@ -3843,5 +4182,8 @@ document.addEventListener('click', (e) => {
   }
 });
 </script>
+
+<!-- ─── POST-USE TRIAL TOAST CONTAINER ────────── -->
+<div id="trial-toast-container"></div>
 </body>
 </html>
