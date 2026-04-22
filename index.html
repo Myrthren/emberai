@@ -782,6 +782,23 @@
     flex-wrap: wrap;
   }
 
+  /* ─── FREE TRIAL PILL ────────────────────── */
+  .trial-pill {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: rgba(212,160,23,0.06);
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+
   /* ─── ERROR ──────────────────────────────── */
   .error-msg {
     color: var(--ember);
@@ -1085,7 +1102,7 @@
       </button>
       <div style="text-align:center;margin-top:16px;">
         <span style="font-size:13px;color:var(--dim);font-style:italic;">
-          Free tier: 1 dish description. Upgrade anytime.
+          Free trial: 2 uses of Dish Creator, Menu Builder, Menu Psychology & Seasonal Ideas. No card required.
         </span>
       </div>
     </div>
@@ -1102,14 +1119,14 @@
     <div class="pricing-grid">
       <!-- Free -->
       <div class="pricing-card">
-        <div class="pricing-tier">Free</div>
+        <div class="pricing-tier">Free Trial</div>
         <div class="pricing-price free">£0</div>
         <div class="pricing-period">FOREVER</div>
         <ul class="pricing-features">
-          <li class="included">1 dish description</li>
-          <li>Menu builder</li>
-          <li>Menu psychology</li>
-          <li>Seasonal ideas</li>
+          <li class="included">2× Dish Creator</li>
+          <li class="included">2× Menu Builder</li>
+          <li class="included">2× Menu Psychology</li>
+          <li class="included">2× Seasonal Ideas</li>
           <li>Saved menus</li>
           <li>Translation</li>
           <li>Allergen tagger</li>
@@ -1274,6 +1291,7 @@
         </div>
         <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;">CLAUDE WILL SEE YOUR PHOTO AS INSPIRATION</div>
       </div>
+      <div class="trial-pill" id="trial-pill-dish"></div>
       <button class="btn-fire" onclick="generateDish()"><span>⚡ Generate Dish Names</span></button>
     </div>
 
@@ -1349,6 +1367,7 @@
     </div>
   </div>
 
+  <div class="trial-pill" id="trial-pill-menu"></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
     <button class="btn-fire" onclick="generateMenu()"><span>🔥 Generate Menu Preview</span></button>
     <button class="btn-ghost" onclick="saveCurrentMenu()" id="save-menu-btn" style="display:none;">💾 SAVE MENU</button>
@@ -1392,6 +1411,7 @@
         </div>
         <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:1px;">CLAUDE CAN READ MENU IMAGES DIRECTLY</div>
       </div>
+      <div class="trial-pill" id="trial-pill-psych"></div>
       <button class="btn-fire" onclick="analyzeMenu()"><span>🧠 Analyse Menu</span></button>
       <div class="loading" id="psych-loading">
         <div class="flame-loader"><span></span><span></span><span></span><span></span><span></span></div>
@@ -1434,6 +1454,7 @@
     </div>
   </div>
 
+  <div class="trial-pill" id="trial-pill-seasonal"></div>
   <button class="btn-fire" onclick="generateSeasonal()"><span>🌿 Get Seasonal Ideas</span></button>
 
   <div class="loading" id="seasonal-loading">
@@ -1904,14 +1925,14 @@
 
   <div class="pricing-grid">
     <div class="pricing-card">
-      <div class="pricing-tier">Free</div>
+      <div class="pricing-tier">Free Trial</div>
       <div class="pricing-price free">£0</div>
-      <div class="pricing-period">FOREVER</div>
+      <div class="pricing-period">FOREVER · NO CARD</div>
       <ul class="pricing-features">
-        <li class="included">1 dish description</li>
-        <li>Menu builder</li>
-        <li>Menu psychology</li>
-        <li>Seasonal ideas</li>
+        <li class="included">2× Dish Creator</li>
+        <li class="included">2× Menu Builder</li>
+        <li class="included">2× Menu Psychology</li>
+        <li class="included">2× Seasonal Ideas</li>
         <li>Saved menus</li>
         <li>Translation</li>
         <li>Allergen tagger</li>
@@ -2006,16 +2027,21 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 // ─── STATE ──────────────────────────────────────────────
 let currentUser = null;
 let userPlan = 'free'; // 'free' | 'flame' | 'inferno' | 'pyro'
-let dishUsageCount = 0;
+let toolUsage = {}; // { dish: 0, menu: 0, psych: 0, seasonal: 0 }
 
 // ─── PLAN PERMISSIONS ───────────────────────────────────
 const pyroFeatures = ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'competitor', 'trends', 'upsell', 'roi', 'brandvoice', 'chefnotes', 'fatigue', 'bulkallergen', 'feedback'];
 const planAccess = {
-  free:    ['dish', 'feedback'],
+  free:    ['dish', 'menu', 'psych', 'seasonal', 'feedback'],
   flame:   ['dish', 'menu', 'psych', 'seasonal', 'saved', 'feedback'],
   inferno: ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'feedback'],
   pyro:    pyroFeatures
 };
+
+// Free tier: 2 uses per tool, lifetime (for the 4 tools below).
+// Paid tiers: unlimited.
+const FREE_TRIAL_LIMITS = { dish: 2, menu: 2, psych: 2, seasonal: 2 };
+const FREE_TRIAL_TOOL_LABELS = { dish: 'Dish Creator', menu: 'Menu Builder', psych: 'Menu Psychology', seasonal: 'Seasonal Ideas' };
 
 function canAccess(feature) {
   return planAccess[userPlan]?.includes(feature) ?? false;
@@ -2046,21 +2072,29 @@ async function setUser(user) {
   const { data } = await sb.from('subscriptions').select('plan').eq('user_id', user.id).single();
   userPlan = data?.plan || 'free';
 
-  // Load dish usage for today
-  const today = new Date().toISOString().split('T')[0];
-  const { data: usage } = await sb.from('dish_usage').select('count').eq('user_id', user.id).eq('date', today).single();
-  dishUsageCount = usage?.count || 0;
+  // Load all-time tool usage
+  await loadToolUsage();
 
   updateHeaderAuth();
   updateLockIcons();
+  updateFreeTrialDisplays();
   document.getElementById('auth-modal').classList.add('hidden');
+}
+
+async function loadToolUsage() {
+  toolUsage = {};
+  if (!currentUser) return;
+  const { data } = await sb.from('tool_usage').select('tool,count').eq('user_id', currentUser.id);
+  (data || []).forEach(r => { toolUsage[r.tool] = r.count; });
 }
 
 function clearUser() {
   currentUser = null;
   userPlan = 'free';
+  toolUsage = {};
   updateHeaderAuth();
   updateLockIcons();
+  updateFreeTrialDisplays();
 }
 
 const ADMIN_EMAIL = 'keneamaechina@gmail.com';
@@ -2258,33 +2292,73 @@ function clearPsychImage() {
   document.getElementById('psych-image-preview').style.display = 'none';
 }
 
-// ─── DISH USAGE GATE ────────────────────────────────────
-async function checkDishUsage() {
-  if (!currentUser) { showAuthModal(); return false; }
-  if (canAccess('menu')) return true; // flame/inferno = unlimited
+// ─── PER-TOOL USAGE GATE (FREE TIER) ────────────────────
+// Free tier = 2 uses per tool, lifetime, across dish/menu/psych/seasonal.
+// Paid tiers = unlimited. Admin bypasses all limits.
+function isFreeTier() {
+  if (!currentUser) return true;
+  if (currentUser.email === ADMIN_EMAIL) return false;
+  return userPlan === 'free';
+}
 
-  // Free: 1 per ever
-  if (dishUsageCount >= 1) {
+function freeUsesRemaining(tool) {
+  const limit = FREE_TRIAL_LIMITS[tool] ?? 0;
+  const used = toolUsage[tool] || 0;
+  return Math.max(0, limit - used);
+}
+
+async function checkToolUsage(tool) {
+  if (!currentUser) { showAuthModal(); return false; }
+  if (!isFreeTier()) return true;
+  if (!(tool in FREE_TRIAL_LIMITS)) { showUpgradeModal(); return false; }
+  if (freeUsesRemaining(tool) <= 0) {
     showUpgradeModal();
     return false;
   }
   return true;
 }
 
-async function incrementDishUsage() {
-  if (!currentUser || canAccess('menu')) return;
-  dishUsageCount++;
-  const today = new Date().toISOString().split('T')[0];
-  await sb.from('dish_usage').upsert({
-    user_id: currentUser.id,
-    date: today,
-    count: dishUsageCount
-  }, { onConflict: 'user_id,date' });
+async function incrementToolUsage(tool) {
+  if (!currentUser) return;
+  if (!isFreeTier()) return;
+  if (!(tool in FREE_TRIAL_LIMITS)) return;
+
+  const next = (toolUsage[tool] || 0) + 1;
+  toolUsage[tool] = next;
+
+  try {
+    await sb.from('tool_usage').upsert({
+      user_id: currentUser.id,
+      tool,
+      count: next,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,tool' });
+  } catch (e) { /* non-fatal */ }
+
+  updateFreeTrialDisplays();
+}
+
+function updateFreeTrialDisplays() {
+  // Render a "FREE TRIAL · X USES LEFT" pill above each limited tool's primary action.
+  Object.keys(FREE_TRIAL_LIMITS).forEach(tool => {
+    const el = document.getElementById('trial-pill-' + tool);
+    if (!el) return;
+    if (!currentUser || !isFreeTier()) {
+      el.style.display = 'none';
+      return;
+    }
+    const left = freeUsesRemaining(tool);
+    const total = FREE_TRIAL_LIMITS[tool];
+    el.style.display = 'inline-flex';
+    el.innerHTML = left > 0
+      ? `<span style="color:var(--gold);">✦</span> FREE TRIAL · ${left}/${total} ${FREE_TRIAL_TOOL_LABELS[tool].toUpperCase()} USES LEFT`
+      : `<span style="color:var(--ember);">✕</span> FREE TRIAL EXHAUSTED — <a onclick="showUpgradeModal()" style="color:var(--flame);cursor:pointer;text-decoration:underline;">UPGRADE</a>`;
+  });
 }
 
 // ─── DISH CREATOR ───────────────────────────────────────
 async function generateDish() {
-  const ok = await checkDishUsage();
+  const ok = await checkToolUsage('dish');
   if (!ok) return;
 
   const ingredients = document.getElementById('dish-ingredients').value.trim();
@@ -2346,7 +2420,7 @@ For each option, respond ONLY in this JSON format:
     });
 
     document.getElementById('dish-output').innerHTML = html;
-    await incrementDishUsage();
+    await incrementToolUsage('dish');
 
   } catch(e) {
     document.getElementById('dish-output').innerHTML = `<div class="error-msg">Error generating dish. Please try again.</div>`;
@@ -2373,6 +2447,9 @@ function removeDish(btn) {
 }
 
 async function generateMenu() {
+  const ok = await checkToolUsage('menu');
+  if (!ok) return;
+
   const name = document.getElementById('restaurant-name').value || 'The Restaurant';
   const tagline = document.getElementById('restaurant-tagline').value || '';
   const style = document.getElementById('menu-style').value;
@@ -2442,6 +2519,7 @@ Respond ONLY in this JSON format:
     document.getElementById('export-row').style.display = 'flex';
     if (canAccess('saved')) document.getElementById('save-menu-btn').style.display = 'inline-flex';
     maybeAutoExport();
+    await incrementToolUsage('menu');
 
   } catch(e) {
     document.getElementById('menu-preview-area').style.display = 'flex';
@@ -2685,6 +2763,9 @@ async function deleteSavedMenu(id) {
 
 // ─── MENU PSYCHOLOGY ────────────────────────────────────
 async function analyzeMenu() {
+  const ok = await checkToolUsage('psych');
+  if (!ok) return;
+
   const menu = document.getElementById('psych-menu').value.trim();
   const imageFile = document.getElementById('psych-image').files[0];
   if (!menu && !imageFile) return;
@@ -2744,6 +2825,7 @@ Scores are 0-100. Notes should be specific to their menu, 1 sentence each.`;
     setTimeout(() => {
       document.querySelectorAll('.psych-bar').forEach(bar => bar.style.width = bar.dataset.width);
     }, 100);
+    await incrementToolUsage('psych');
 
   } catch(e) {
     document.getElementById('psych-output').innerHTML = `<div class="error-msg">Error analysing menu. Please try again.</div>`;
@@ -2754,6 +2836,9 @@ Scores are 0-100. Notes should be specific to their menu, 1 sentence each.`;
 
 // ─── SEASONAL ───────────────────────────────────────────
 async function generateSeasonal() {
+  const ok = await checkToolUsage('seasonal');
+  if (!ok) return;
+
   const region = document.getElementById('seasonal-region').value || 'UK';
   const cuisine = document.getElementById('seasonal-cuisine').value || 'modern European';
   const type = document.getElementById('seasonal-type').value;
@@ -2801,6 +2886,7 @@ Respond ONLY in this JSON format:
 
     html += '</div>';
     document.getElementById('seasonal-output').innerHTML = html;
+    await incrementToolUsage('seasonal');
 
   } catch(e) {
     document.getElementById('seasonal-output').innerHTML = `<div class="error-msg">Error fetching seasonal ideas. Please try again.</div>`;
