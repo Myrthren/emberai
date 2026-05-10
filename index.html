@@ -974,6 +974,287 @@
     background: rgba(212,160,23,0.08);
   }
 
+  /* ─── SPECIAL GLOWING NAV TABS ───────────────── */
+  .tab-special {
+    background: linear-gradient(135deg, #d4a017, #e8721a) !important;
+    color: #0a0805 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    letter-spacing: 1.5px !important;
+    padding: 12px 18px !important;
+    box-shadow: 0 0 16px rgba(212,160,23,0.65), 0 0 36px rgba(212,160,23,0.28), inset 0 1px 0 rgba(255,255,255,0.15);
+    animation: specialGlow 2.2s ease-in-out infinite;
+    position: relative;
+    flex-shrink: 0;
+  }
+  @keyframes specialGlow {
+    0%, 100% { box-shadow: 0 0 16px rgba(212,160,23,0.65), 0 0 36px rgba(212,160,23,0.28); }
+    50%       { box-shadow: 0 0 28px rgba(212,160,23,1.0), 0 0 60px rgba(212,160,23,0.55), 0 0 90px rgba(201,74,26,0.2); }
+  }
+  .tab-special:hover { filter: brightness(1.12); }
+  .tab-special.active {
+    background: linear-gradient(135deg, #f5c842, #e8a020) !important;
+    box-shadow: 0 0 30px rgba(245,200,66,0.85), 0 0 70px rgba(212,160,23,0.6) !important;
+    color: #0a0805 !important;
+  }
+  /* Activated state — trial is live, calmer glow */
+  .tab-special.activated {
+    background: linear-gradient(135deg, rgba(212,160,23,0.25), rgba(201,74,26,0.18)) !important;
+    color: var(--gold) !important;
+    border: 1px solid rgba(212,160,23,0.5) !important;
+    box-shadow: 0 0 10px rgba(212,160,23,0.25) !important;
+    animation: none !important;
+  }
+  .tab-special.activated:hover { filter: brightness(1.15); }
+
+  /* ─── ACTIVATE FREE TRIAL PANEL ──────────────── */
+  .activate-panel-wrap {
+    max-width: 680px;
+    margin: 40px auto;
+    text-align: center;
+  }
+  .activate-ember-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    letter-spacing: 12px;
+    background: linear-gradient(135deg, #d4a017, #e8721a, #f5c842);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+  .activate-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 5px;
+    color: var(--cream);
+    margin: 12px 0 8px;
+  }
+  .activate-sub {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    color: var(--dim);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 auto 36px;
+  }
+  .activate-features {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .activate-feat {
+    background: rgba(212,160,23,0.08);
+    border: 1px solid rgba(212,160,23,0.3);
+    padding: 12px 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-align: center;
+  }
+  .activate-feat span { display:block; font-family:Georgia,serif; font-size:11px; color:var(--dim); letter-spacing:0.5px; margin-top:4px; text-transform:none; }
+  .btn-activate {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #d4a017, #e8721a, #f5c842);
+    color: #0a0805;
+    border: none;
+    padding: 20px 48px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(212,160,23,0.7), 0 0 60px rgba(212,160,23,0.3);
+    animation: specialGlow 2.2s ease-in-out infinite;
+    transition: filter 0.2s;
+  }
+  .btn-activate:hover { filter: brightness(1.12); }
+  .activate-note {
+    margin-top: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--dim);
+  }
+  .activate-already {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 28px;
+    border: 1px solid var(--smoke);
+    text-align: center;
+  }
+
+  /* ─── GUIDE PANEL ────────────────────────────── */
+  .guide-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0;
+    min-height: 600px;
+    border: 1px solid var(--smoke);
+  }
+  .guide-sidebar {
+    background: var(--char);
+    border-right: 1px solid var(--smoke);
+    padding: 0;
+    overflow-y: auto;
+    max-height: 78vh;
+  }
+  .guide-sidebar-group {
+    padding: 8px 0 4px;
+  }
+  .guide-sidebar-group-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    padding: 6px 18px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .guide-sidebar-btn {
+    display: block;
+    width: 100%;
+    padding: 9px 18px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--dim);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-transform: uppercase;
+  }
+  .guide-sidebar-btn:hover { background: rgba(255,255,255,0.04); color: var(--cream); }
+  .guide-sidebar-btn.active { background: rgba(212,160,23,0.12); color: var(--gold); border-left: 2px solid var(--gold); }
+  .guide-sidebar-btn .tier-dot {
+    display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 7px; vertical-align: middle;
+  }
+  .guide-main {
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .guide-top-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .guide-progress {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--dim);
+  }
+  .guide-arrows { display: flex; gap: 8px; margin-left: auto; }
+  .guide-arrow {
+    background: var(--ash); border: 1px solid var(--smoke);
+    color: var(--cream); padding: 8px 14px; cursor: pointer; font-size: 14px;
+    transition: border-color 0.15s;
+  }
+  .guide-arrow:hover { border-color: var(--gold); color: var(--gold); }
+  .guide-tour-btn {
+    background: transparent; border: 1px solid var(--smoke);
+    color: var(--dim); padding: 8px 14px; cursor: pointer;
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    transition: all 0.15s;
+  }
+  .guide-tour-btn.on { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.08); }
+  .guide-tool-header { display: flex; align-items: center; gap: 14px; }
+  .guide-tool-icon { font-size: 32px; }
+  .guide-tool-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .guide-tier-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .guide-tier-badge.free { background: rgba(212,160,23,0.15); color: var(--gold); border: 1px solid rgba(212,160,23,0.4); }
+  .guide-tier-badge.flame { background: rgba(201,74,26,0.15); color: var(--flame); border: 1px solid rgba(201,74,26,0.4); }
+  .guide-tier-badge.inferno { background: rgba(201,74,26,0.12); color: #ff8a50; border: 1px solid rgba(255,138,80,0.4); }
+  .guide-tier-badge.pyro { background: linear-gradient(135deg,rgba(201,74,26,0.12),rgba(212,160,23,0.12)); color: var(--gold); border: 1px solid rgba(212,160,23,0.5); }
+  .guide-tagline {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: var(--cream);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .guide-how {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+  .guide-example {
+    background: var(--char);
+    border: 1px solid var(--smoke);
+    border-left: 3px solid var(--gold);
+    padding: 0;
+    overflow: hidden;
+  }
+  .guide-example-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--smoke);
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.02);
+  }
+  .guide-example-body {
+    padding: 18px 20px;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    color: var(--cream);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+  .guide-example-body strong { color: var(--gold); }
+  .guide-example.locked { border-left-color: var(--smoke); opacity: 0.6; }
+  .guide-cta-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .guide-try-btn {
+    background: linear-gradient(135deg, var(--ember), var(--flame));
+    color: #0a0805; border: none; padding: 12px 24px;
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; font-weight: bold; cursor: pointer;
+  }
+  .guide-try-btn:hover { filter: brightness(1.12); }
+  .guide-unlock-btn {
+    background: transparent; color: var(--gold);
+    border: 1px solid rgba(212,160,23,0.5); padding: 12px 24px;
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; cursor: pointer;
+  }
+  .guide-unlock-btn:hover { background: rgba(212,160,23,0.08); }
+  @media (max-width: 860px) {
+    .guide-layout { grid-template-columns: 1fr; }
+    .guide-sidebar { max-height: 180px; display: flex; overflow-x: auto; overflow-y: hidden; }
+    .guide-sidebar-group { display: flex; flex-wrap: nowrap; }
+    .guide-sidebar-group-label { display: none; }
+    .guide-sidebar-btn { white-space: nowrap; }
+    .guide-main { padding: 24px 20px; }
+  }
+
   /* ─── ERROR ──────────────────────────────── */
   .error-msg {
     color: var(--ember);
@@ -1406,7 +1687,12 @@
 
 <!-- ─── NAVIGATION ────────────────────────────── -->
 <nav class="nav-tabs" id="main-nav">
-  <button class="tab active" onclick="switchTab('dish', event)">Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
+  <!-- Special glowing tabs — always first -->
+  <button class="tab tab-special" id="tab-activate" onclick="switchTab('activate', event)">✦ ACTIVATE FREE TRIAL</button>
+  <button class="tab tab-special" onclick="switchTab('guide', event)">📖 GUIDE</button>
+  <button class="tab tab-special" onclick="switchTab('feedback', event)">💬 SUPPORT</button>
+  <!-- Tool tabs -->
+  <button class="tab" onclick="switchTab('dish', event)">Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
   <button class="tab" onclick="switchTab('menu', event)">Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
   <button class="tab" onclick="switchTab('psych', event)">Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
   <button class="tab" onclick="switchTab('seasonal', event)">Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
@@ -1423,9 +1709,20 @@
   <button class="tab" onclick="switchTab('chefnotes', event)">Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
   <button class="tab" onclick="switchTab('fatigue', event)">Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
   <button class="tab" onclick="switchTab('bulkallergen', event)">Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
-  <button class="tab" onclick="switchTab('feedback', event)">Support</button>
   <button class="tab" onclick="switchTab('pricing', event)">Pricing</button>
 </nav>
+
+<!-- ─── ACTIVATE FREE TRIAL ───────────────────── -->
+<div id="panel-activate" class="panel">
+  <div id="activate-content"><!-- rendered by JS --></div>
+</div>
+
+<!-- ─── GUIDE ──────────────────────────────────── -->
+<div id="panel-guide" class="panel">
+  <div class="section-title">EMBER Feature Guide</div>
+  <div class="section-sub">Every tool, explained — with real examples. Tour at your own pace or hit Auto-Tour.</div>
+  <div style="margin-top:28px;" id="guide-layout-wrap"><!-- rendered by JS --></div>
+</div>
 
 <!-- ─── DISH CREATOR ──────────────────────────── -->
 <div id="panel-dish" class="panel active">
@@ -2220,6 +2517,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 let currentUser = null;
 let userPlan = 'free'; // 'free' | 'flame' | 'inferno' | 'pyro'
 let toolUsage = {}; // { dish: 0, menu: 0, psych: 0, seasonal: 0 }
+let trialActivated = false; // must explicitly activate free trial
 
 // ─── PLAN PERMISSIONS ───────────────────────────────────
 const pyroFeatures = ['dish', 'menu', 'psych', 'seasonal', 'saved', 'translate', 'allergen', 'price', 'qr', 'competitor', 'trends', 'upsell', 'roi', 'brandvoice', 'chefnotes', 'fatigue', 'bulkallergen', 'feedback'];
@@ -2274,6 +2572,8 @@ async function setUser(user) {
   updateHeaderAuth();
   updateLockIcons();
   updateFreeTrialDisplays();
+  updateActivateTab();
+  renderActivatePanel();
   document.getElementById('auth-modal').classList.add('hidden');
 }
 
@@ -2282,16 +2582,22 @@ async function loadToolUsage() {
   if (!currentUser) return;
   const { data } = await sb.from('tool_usage').select('tool,count').eq('user_id', currentUser.id);
   (data || []).forEach(r => { toolUsage[r.tool] = r.count; });
+  // Trial activation: stored as a special tool row OR localStorage
+  trialActivated = !!toolUsage['__activated'] ||
+    localStorage.getItem('ember_trial_v2_' + currentUser.id) === '1';
 }
 
 function clearUser() {
   currentUser = null;
   userPlan = 'free';
   toolUsage = {};
+  trialActivated = false;
   resetTrialBannerDismissal();
   updateHeaderAuth();
   updateLockIcons();
   updateFreeTrialDisplays();
+  updateActivateTab();
+  renderActivatePanel();
 }
 
 const ADMIN_EMAIL = 'keneamaechina@gmail.com';
@@ -2400,23 +2706,25 @@ async function handleSignOut() {
 }
 
 // ─── TAB SWITCHING ──────────────────────────────────────
+const ALWAYS_ALLOWED_TABS = ['pricing', 'guide', 'activate', 'feedback'];
+
 function switchTab(name, e) {
-  // Check access
-  if (!canAccess(name) && name !== 'pricing') {
-    if (!currentUser) {
-      showAuthModal();
-    } else {
-      showUpgradeModal();
-    }
-    return;
+  if (!ALWAYS_ALLOWED_TABS.includes(name) && !canAccess(name)) {
+    if (!currentUser) { showAuthModal(); return; }
+    showUpgradeModal(); return;
   }
 
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  if (e && e.target) e.target.classList.add('active');
+  // Mark the clicked button active (handle both direct click and programmatic call)
+  if (e && e.target && e.target.closest) {
+    const btn = e.target.closest('.tab');
+    if (btn) btn.classList.add('active');
+  }
   document.getElementById('panel-' + name).classList.add('active');
 
   if (name === 'saved') loadSavedMenus();
+  if (name === 'guide') renderGuide();
 }
 
 // ─── API HELPER ─────────────────────────────────────────
@@ -2508,12 +2816,19 @@ function freeUsesRemaining(tool) {
 
 async function checkToolUsage(tool) {
   if (!currentUser) { showAuthModal(); return false; }
-  if (!isFreeTier()) return true;
-  if (!(tool in FREE_TRIAL_LIMITS)) { showUpgradeModal(); return false; }
-  if (freeUsesRemaining(tool) <= 0) {
-    showUpgradeModal();
+  if (!isFreeTier()) return true; // paid users always pass
+  // Free users must activate first
+  if (!trialActivated) {
+    // Jump to the activate panel
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-activate').classList.add('active');
+    document.getElementById('panel-activate').classList.add('active');
+    renderActivatePanel();
     return false;
   }
+  if (!(tool in FREE_TRIAL_LIMITS)) { showUpgradeModal(); return false; }
+  if (freeUsesRemaining(tool) <= 0) { showUpgradeModal(); return false; }
   return true;
 }
 
@@ -2693,6 +3008,591 @@ function showTrialToast(tool, remaining) {
     toast.classList.add('leaving');
     setTimeout(() => toast.remove(), 220);
   }, ttl);
+}
+
+// ─── ACTIVATE FREE TRIAL ────────────────────────────────
+
+async function activateTrial() {
+  if (!currentUser) { showAuthModal('register'); return; }
+  trialActivated = true;
+  localStorage.setItem('ember_trial_v2_' + currentUser.id, '1');
+  try {
+    await sb.from('tool_usage').upsert(
+      { user_id: currentUser.id, tool: '__activated', count: 1, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id,tool' }
+    );
+  } catch(e) { /* non-fatal */ }
+  updateActivateTab();
+  updateFreeTrialDisplays();
+  renderActivatePanel();
+  // Show a welcome toast then go to Dish Creator
+  showWelcomeToast();
+  setTimeout(() => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    // Activate the Dish Creator tab
+    const dishTab = document.querySelector('.tab[onclick*="\'dish\'"]');
+    if (dishTab) dishTab.classList.add('active');
+    document.getElementById('panel-dish').classList.add('active');
+  }, 1200);
+}
+
+function showWelcomeToast() {
+  const container = document.getElementById('trial-toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'trial-toast';
+  toast.innerHTML = `
+    <div class="tt-row"><span class="tt-tick" style="color:var(--gold);">✦</span><span class="tt-title">FREE TRIAL ACTIVATED</span></div>
+    <div class="tt-msg">You have <strong>2 uses each</strong> of Dish Creator, Menu Builder, Menu Psychology and Seasonal Ideas. Let's start with your first dish.</div>
+    <div class="tt-actions"><button class="tt-dismiss" onclick="this.closest('.trial-toast').remove();">CLOSE</button></div>`;
+  container.appendChild(toast);
+  setTimeout(() => { if (toast.isConnected) { toast.classList.add('leaving'); setTimeout(() => toast.remove(), 220); } }, 6000);
+}
+
+function updateActivateTab() {
+  const tab = document.getElementById('tab-activate');
+  if (!tab) return;
+  // Paid users: hide the tab entirely — they don't need it
+  if (currentUser && !isFreeTier() && currentUser.email !== ADMIN_EMAIL) {
+    tab.style.display = 'none'; return;
+  }
+  tab.style.display = '';
+  if (currentUser && trialActivated) {
+    // Trial is live — show calm state
+    const totalLeft = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + freeUsesRemaining(t), 0);
+    const totalQuota = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + FREE_TRIAL_LIMITS[t], 0);
+    tab.textContent = totalLeft > 0 ? `✦ TRIAL ACTIVE · ${totalLeft}/${totalQuota}` : '✕ TRIAL USED';
+    tab.classList.add('activated');
+    tab.classList.remove('tab-special'); // remove pulsing glow
+  } else {
+    tab.innerHTML = '✦ ACTIVATE FREE TRIAL';
+    tab.classList.remove('activated');
+    tab.classList.add('tab-special');
+  }
+}
+
+function renderActivatePanel() {
+  const el = document.getElementById('activate-content');
+  if (!el) return;
+
+  // Not signed in
+  if (!currentUser) {
+    el.innerHTML = `
+      <div class="activate-panel-wrap">
+        <div class="activate-ember-mark">EMBER</div>
+        <div class="activate-headline">START YOUR FREE TRIAL</div>
+        <div class="activate-sub">Create a free account to unlock 2 uses each of EMBER's four core AI tools — no card, no commitment.</div>
+        <div class="activate-features">
+          <div class="activate-feat">2× DISH CREATOR<span>Name & describe your dishes</span></div>
+          <div class="activate-feat">2× MENU BUILDER<span>Print-ready AI menu design</span></div>
+          <div class="activate-feat">2× MENU PSYCHOLOGY<span>Spot what's losing you money</span></div>
+          <div class="activate-feat">2× SEASONAL IDEAS<span>What to serve right now</span></div>
+        </div>
+        <button class="btn-activate" onclick="showAuthModal('register')">✦ CREATE FREE ACCOUNT</button>
+        <div class="activate-note">ALREADY HAVE AN ACCOUNT? <a onclick="showAuthModal('login')" style="color:var(--gold);cursor:pointer;text-decoration:underline;">SIGN IN</a></div>
+      </div>`;
+    return;
+  }
+
+  // Paid plan
+  if (!isFreeTier()) {
+    el.innerHTML = `
+      <div class="activate-panel-wrap">
+        <div class="activate-ember-mark">EMBER</div>
+        <div class="activate-headline">ALL TOOLS UNLOCKED</div>
+        <div class="activate-sub">You're on the ${userPlan.charAt(0).toUpperCase()+userPlan.slice(1)} plan — unlimited access is already active. Head to any tool to get started.</div>
+        <button class="btn-activate" onclick="switchTab('dish',null)">GO TO DISH CREATOR →</button>
+      </div>`;
+    return;
+  }
+
+  // Signed in, free, trial already activated
+  if (trialActivated) {
+    const totalLeft = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + freeUsesRemaining(t), 0);
+    const totalQuota = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + FREE_TRIAL_LIMITS[t], 0);
+    el.innerHTML = `
+      <div class="activate-panel-wrap">
+        <div class="activate-ember-mark">EMBER</div>
+        <div class="activate-headline">TRIAL IS ACTIVE</div>
+        <div class="activate-sub">You have <strong style="color:var(--gold);">${totalLeft} of ${totalQuota}</strong> free uses remaining across all four tools.</div>
+        <div class="activate-features">
+          ${Object.entries(FREE_TRIAL_LIMITS).map(([t,lim]) => {
+            const left = freeUsesRemaining(t);
+            return `<div class="activate-feat" style="${left===0?'opacity:0.4;':''}">
+              ${left}/${lim} ${FREE_TRIAL_TOOL_LABELS[t].toUpperCase()}<span>${left===0?'EXHAUSTED':'remaining'}</span>
+            </div>`;
+          }).join('')}
+        </div>
+        ${totalLeft > 0
+          ? `<button class="btn-activate" onclick="switchTab('dish',null)">GO TO DISH CREATOR →</button>`
+          : `<button class="btn-activate" onclick="showUpgradeModal()">✦ UPGRADE TO CONTINUE</button>`}
+        <div class="activate-note">UPGRADE TO FLAME FOR UNLIMITED ACCESS · £12.99/MO · CANCEL ANYTIME</div>
+      </div>`;
+    return;
+  }
+
+  // Signed in, free, NOT yet activated — the main activation screen
+  el.innerHTML = `
+    <div class="activate-panel-wrap">
+      <div class="activate-ember-mark">EMBER</div>
+      <div class="activate-headline">UNLOCK YOUR FREE TRIAL</div>
+      <div class="activate-sub">Tap the button below to activate 2 free uses of each of EMBER's four core AI tools.<br>No card required. No automatic charges. Ever.</div>
+      <div class="activate-features">
+        <div class="activate-feat">2× DISH CREATOR<span>Name & describe any dish</span></div>
+        <div class="activate-feat">2× MENU BUILDER<span>AI-designed, print-ready PDF</span></div>
+        <div class="activate-feat">2× MENU PSYCHOLOGY<span>Profit-gap analysis of your menu</span></div>
+        <div class="activate-feat">2× SEASONAL IDEAS<span>What your region is calling for</span></div>
+      </div>
+      <button class="btn-activate" onclick="activateTrial()">✦ ACTIVATE FREE TRIAL NOW</button>
+      <div class="activate-note">ALREADY IMPRESSED? <a onclick="showUpgradeModal()" style="color:var(--gold);cursor:pointer;text-decoration:underline;">SEE PAID PLANS FROM £12.99/MO</a></div>
+    </div>`;
+}
+
+// ─── INTERACTIVE GUIDE ───────────────────────────────────
+
+let guideIndex = 0;
+let guideTourActive = false;
+let guideTourTimer = null;
+
+const GUIDE_TOOLS = [
+  {
+    id: 'dish', tier: 'free', icon: '⚡',
+    name: 'Dish Creator',
+    tagline: 'Transform raw ingredients into names and descriptions that ignite appetite.',
+    how: 'Enter your ingredients, cooking method, cuisine type and course. EMBER returns 3–5 dish names with mouth-watering, print-ready descriptions in your chosen style.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Slow-braised lamb shoulder · pomegranate molasses · sumac · charred aubergine · toasted pine nuts · fresh mint · Fine dining',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `POMEGRANATE-KISSED SHOULDER OF LAMB
+Yielding slow-braised shoulder, glazed with pomegranate molasses and dusted with ground sumac. Accompanied by charred aubergine silkened with tahini, scattered with toasted pine nuts and lifted by a flourish of torn mint. Rich, complex, deeply comforting.
+
+EMBER-LACQUERED LAMB
+Twelve-hour shoulder, falling from the bone, finished in a reduction of pomegranate and dark spice. Served beside smoked aubergine cream, pine nut crumb and mint oil. A dish built for the back of the menu.`,
+  },
+  {
+    id: 'menu', tier: 'free', icon: '📋',
+    name: 'Menu Builder',
+    tagline: 'AI-crafted, print-ready menus — from dish list to designed PDF in minutes.',
+    how: 'Add your restaurant name, tagline and dishes. Pick a visual style (Elegant Dark, Rustic Warm, Minimal Modern or Bold Industrial) and a layout. Download as PDF, PNG or HTML — or print directly.',
+    inputLabel: 'WHAT YOU PROVIDE',
+    input: 'Restaurant: The Ember Room\nStyle: Elegant Dark · Layout: Two Column\nDishes: Seared scallop, Black garlic chicken, Venison tartare, Tonka bean crème brûlée...',
+    outputLabel: 'WHAT YOU GET',
+    output: `A full-page styled menu, formatted and ready to print or hand to a designer.\n\nStyled headers, section dividers, balanced typography, price alignment — all generated automatically.\n\nExport options: PDF (paginated A4) · PNG · HTML file · Copy HTML to clipboard · Print directly.`,
+  },
+  {
+    id: 'psych', tier: 'free', icon: '🧠',
+    name: 'Menu Psychology',
+    tagline: 'Uncover the hidden patterns on your menu that quietly cost you money.',
+    how: 'Paste your existing menu text or upload a photo of it. EMBER analyses pricing psychology, descriptive language, layout logic and profit-driver placement, then returns a scored breakdown with specific fixes.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Paste or photograph your current menu — dish names, descriptions, prices, layout.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `MENU PSYCHOLOGY REPORT — The Hearth
+
+▸ PRICING ANCHORING: 4/10
+No high-anchor dish visible in opening section. Guests scan left-to-right; without a £38+ item early, mid-range dishes feel expensive. Recommend adding a premium lead item.
+
+▸ DESCRIPTIVE POWER: 6/10
+7 of 14 dishes use generic terms ("pan-fried", "served with"). Replace with origin, process or sensory language — e.g. "cast-iron seared" or "double-smoked."
+
+▸ DECOY PLACEMENT: 3/10
+No deliberate decoy item detected. A single high-margin, mid-price dish placed next to a premium item will lift average spend measurably.
+
+▸ PROFIT DRIVER VISIBILITY: 5/10
+Your highest-margin dishes (pasta section) are on page 2. Move one to page 1, position 3 — the natural eye-landing zone.`,
+  },
+  {
+    id: 'seasonal', tier: 'free', icon: '🌿',
+    name: 'Seasonal Ideas',
+    tagline: "What the season and your region are calling for — matched to your cuisine.",
+    how: 'Enter your region, cuisine type and venue style. EMBER returns a curated list of what is prime right now — produce, proteins, flavour profiles and specific dish ideas to act on immediately.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Region: Northern England · Cuisine: Modern British · Type: Gastropub',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `SEASONAL RADAR — May · Northern England · Modern British
+
+PRIME RIGHT NOW:
+— Wild garlic (last weeks of season — act fast)
+— Jersey Royal new potatoes · Asparagus (peak)
+— Rhubarb (forced season ending; outdoor beginning)
+— Wood pigeon · Sea trout · Brown crab
+
+DISH IDEAS:
+1. Wild garlic & Jersey Royal soup, crème fraîche, toasted rye
+2. Asparagus with smoked hollandaise, crispy capers, soft-boiled egg
+3. Sea trout, rhubarb beurre blanc, fennel, samphire
+4. Wood pigeon breast, wild garlic gnocchi, pickled elderflower
+
+FLAVOUR DIRECTION: bright, herbal, lean into spring acidity. Rhubarb and elderflower give you natural dessert bridges.`,
+  },
+  {
+    id: 'saved', tier: 'flame', icon: '💾',
+    name: 'Saved Menus',
+    tagline: 'Your menu library — version, duplicate, and revisit whenever you need.',
+    how: 'After generating a menu you are happy with, save it to your account library. Return to any saved menu, duplicate it for seasonal updates, or use it as a starting point for a new location.',
+    inputLabel: 'HOW IT WORKS',
+    input: 'Click "Save Menu" after any Menu Builder generation. Your menus are stored securely under your account.',
+    outputLabel: 'WHAT YOU GET',
+    output: `A personal menu library with:\n— Named, timestamped saves\n— One-click duplicate for seasonal variants\n— Re-open and re-export any saved menu at any time\n— Up to 5 menus on Flame · Unlimited on Inferno/Pyro`,
+  },
+  {
+    id: 'translate', tier: 'inferno', icon: '🌍',
+    name: 'Menu Translation',
+    tagline: 'Your menu in 10+ languages — culturally adapted, not literally translated.',
+    how: 'Paste your menu. Select target languages. EMBER translates dish names and descriptions with cultural sensitivity — adjusting idioms, portion expectations and tone for the target audience rather than giving word-for-word translations.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Menu text + target languages: French, Japanese, Spanish, Mandarin',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `FRENCH VERSION — Les Plats Principaux
+
+Épaule d'agneau confite aux saveurs de grenade
+Épaule fondante, longuement mijotée, glacée au mélasse de grenade et au sumac. Accompagnée d'une crème d'aubergine fumée, de pignons de pin dorés et de menthe fraîche.
+
+JAPANESE VERSION — メインディッシュ
+
+ザクロ風味のラム肩肉
+長時間かけてじっくり煮込んだ肩肉をザクロのモラセスとスマックでグレーズ。炭火で焼いたナスのピューレ、ローストしたパインナッツ、フレッシュミントを添えて。`,
+  },
+  {
+    id: 'allergen', tier: 'inferno', icon: '⚠️',
+    name: 'Allergen Tagger',
+    tagline: 'Auto-detect the 14 major allergens and generate compliant dietary labels.',
+    how: 'Paste your menu. EMBER reads every dish and ingredient, flags which of the 14 UK mandatory allergens are present, marks what can be adapted on request, and produces a formatted allergen reference ready for your kitchen and front-of-house.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Pomegranate-kissed shoulder of lamb, charred aubergine, toasted pine nuts, tahini, mint oil, rye bread crumb...',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `ALLERGEN REPORT — Pomegranate Lamb
+
+CONTAINS: Sesame (tahini) · Gluten (rye crumb)
+MAY CONTAIN: Tree nuts (cross-contamination risk, pine nuts)
+FREE FROM: Dairy · Eggs · Fish · Shellfish · Peanuts · Soya · Celery · Mustard · Lupin · Sulphites
+
+ADAPTABLE: Can be prepared gluten-free on request (remove rye crumb, substitute garnish).
+
+Suitable for: Dairy-free · Egg-free · Halal (confirm sourcing)`,
+  },
+  {
+    id: 'price', tier: 'inferno', icon: '💷',
+    name: 'Price Optimiser',
+    tagline: 'Find exactly where your pricing structure is leaving money on the table.',
+    how: 'Paste your menu with prices. EMBER analyses your pricing architecture — anchor points, category spread, portion perception, margin signals — and identifies specific adjustments likely to improve revenue without alienating guests.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Full menu with dish names, descriptions and current prices.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `PRICE OPTIMISATION REPORT
+
+▸ STARTER RANGE: £7 – £9 (tight)
+Range too narrow — no anchor starter. Introduce one premium starter at £14–16. This makes £9 feel accessible and increases average starter attachment.
+
+▸ MAIN RANGE: £17 – £22
+Missing a £28–32 prestige main. Guests calibrate "expensive" based on the highest item. Without one, your £22 mains carry the psychological burden of being "the most expensive."
+
+▸ DESSERT PRICING: £6.50 flat
+Flat dessert pricing signals commodity. Test tiered pricing: £6 (standard) / £9 (premium, e.g. tableside element). Expect 15–25% uplift on premium attach rate.
+
+ESTIMATED REVENUE IMPACT: +8–14% per head over 90 days with full implementation.`,
+  },
+  {
+    id: 'qr', tier: 'inferno', icon: '📱',
+    name: 'QR Menu Builder',
+    tagline: 'A scannable QR code linking to a mobile-optimised version of your menu.',
+    how: 'After generating your menu, EMBER creates a QR code linking to a mobile-friendly version. Download the QR for print on table cards, posters or packaging. Guests scan and see a clean, branded menu on any device.',
+    inputLabel: 'HOW IT WORKS',
+    input: 'Generate your menu → click "QR Builder" → download QR image → print on table cards or stickers.',
+    outputLabel: 'WHAT YOU GET',
+    output: `— High-resolution QR code (PNG, print-ready)\n— Mobile-optimised menu page accessible from any device\n— No app download required for guests\n— Branded with your restaurant name and style\n— Works on Inferno and Pyro plans`,
+  },
+  {
+    id: 'competitor', tier: 'pyro', icon: '🔍',
+    name: 'Competitor Analyser',
+    tagline: 'See exactly where rivals outshine you — and where you have the advantage.',
+    how: 'Paste your menu and a competitor's menu. EMBER compares them side by side across pricing strategy, descriptive quality, category depth, dietary options, and perceived value — then produces a gap analysis with recommended actions.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Your menu text + competitor\'s menu text.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `COMPETITOR ANALYSIS — The Hearth vs. Forge & Flame
+
+WHERE THEY BEAT YOU:
+— Starter range: 8 options vs. your 5 — they win on choice perception
+— Vegetarian labelling: clearly marked on every item; yours require guessing
+— Dessert descriptions: 40% more sensory language — stronger impulse conversion
+
+WHERE YOU BEAT THEM:
+— Main course pricing: £2–4 more competitive on equivalent protein
+— Provenance storytelling: your meat sourcing copy is specific; theirs is generic
+— Dietary adaptability: your "can be adapted" notes build trust
+
+PRIORITY ACTIONS: Add 2 starters · Label vegetarian options · Upgrade dessert copy.`,
+  },
+  {
+    id: 'trends', tier: 'pyro', icon: '📈',
+    name: 'Trend Radar',
+    tagline: 'What\'s hot in UK restaurants right now — matched against your menu.',
+    how: 'EMBER surfaces emerging trends in the UK dining scene and cross-references them with your current menu to identify gaps, early-adoption opportunities, and items that may be approaching trend fatigue.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Your current menu text.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `TREND RADAR — May 2025
+
+RISING (add now for first-mover edge):
+— Smoked butter as a sauce base (replacing cream)
+— Korean-inflected pub food (gochujang glazes, kimchi sides)
+— Non-alcoholic pairing menus (separate from cocktails)
+
+YOUR MENU ALIGNMENT:
+— ✓ Wood-fired cooking: on-trend, keep featuring it prominently
+— ✗ No fermented elements: kimchi, miso, kefir appearing on 34% of competitor menus
+— ✗ Dessert lacks a "share" option — large-format desserts up 28% YoY
+
+FADING (consider retiring):
+— Burrata as a starter (peak passed ~18 months ago in your tier)
+— Truffle on everything — perceived as lazy differentiation`,
+  },
+  {
+    id: 'upsell', tier: 'pyro', icon: '💬',
+    name: 'Upsell Script Generator',
+    tagline: 'Train your staff to sell — not just serve. Scripts built from your actual menu.',
+    how: 'Paste your menu. EMBER writes natural, non-pushy upsell and recommendation scripts for your front-of-house team — covering starters, sides, drinks pairings, desserts and special occasions.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Your menu text.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `UPSELL SCRIPTS — The Ember Room
+
+STARTER ATTACHMENT:
+"The lamb is incredible tonight — the wild garlic soup is a really clean way to start before it, keeps the palate fresh."
+
+SIDE UPSELL:
+"Most people go for the potato gratin alongside that — it's slightly indulgent but really completes it."
+
+DESSERT PITCH (after clearing mains):
+"Are you happy to see a dessert menu? The tonka bean brûlée takes 8 minutes but it's worth the wait — do you have time?"
+
+OCCASION RECOGNITION:
+"Is it a special occasion tonight? We can arrange a small something for the table if you'd like."`,
+  },
+  {
+    id: 'roi', tier: 'pyro', icon: '📊',
+    name: 'Menu ROI Estimator',
+    tagline: 'Estimate the revenue impact of a menu or pricing change before you commit.',
+    how: 'Enter your current covers per week, average spend, and the change you\'re considering (new dish, price increase, removed item). EMBER models the likely revenue impact over 30, 60 and 90 days so you can make the call with numbers.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Covers/week: 280 · Avg spend: £34 · Change: Raise main course prices by £1.50 across the board',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `ROI ESTIMATE
+
+CURRENT BASELINE:
+280 covers/week × £34 avg = £9,520/week · £495,040/year
+
+PROPOSED CHANGE: +£1.50 on all mains (assume 85% of covers order a main)
+
+PROJECTED UPLIFT:
++£357/week · +£18,564/year (assuming 0% cover loss)
+
+SENSITIVITY:
+If 5% of covers are lost to price sensitivity: net +£14,800/year
+If 10% lost: net +£10,040/year — still positive
+
+VERDICT: Financially sound. Risk is low given elasticity norms for your tier. Consider anchoring the increase with one new premium main to contextualise the change.`,
+  },
+  {
+    id: 'brandvoice', tier: 'pyro', icon: '🎙️',
+    name: 'Brand Voice Lock',
+    tagline: 'Define your restaurant\'s personality once — every EMBER tool speaks in that voice.',
+    how: 'Describe your brand: formal or casual, warm or edgy, poetic or precise. EMBER saves this voice profile and applies it automatically to every dish description, menu, psychology report and seasonal idea it generates for you — ensuring consistency across all output.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Voice: Warm, confident, slightly poetic. Avoid: pretentious language, French terms. Prioritise: storytelling, provenance, comfort.',
+    outputLabel: 'WHAT CHANGES',
+    output: `Without Brand Voice Lock:\n"Pan-fried duck breast with seasonal vegetables and jus."\n\nWith Brand Voice Lock (warm, provenance-led):\n"Herb Hill Farm duck breast, rested and sliced, with roasted heritage roots from just down the road and a glossy pan sauce built from the bones. Simple done properly."`,
+  },
+  {
+    id: 'chefnotes', tier: 'pyro', icon: '📝',
+    name: "Chef's Notes Generator",
+    tagline: 'Elegant provenance copy for tasting menus, PDFs, and high-end table cards.',
+    how: 'Enter a dish with its sourcing details. EMBER writes the thoughtful, editorial-style chef\'s note that belongs in a tasting menu card, gift box insert, or fine dining table card — the kind that makes a meal feel like an experience.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Dish: Venison tartare · Source: Holkham Estate, Norfolk · Method: Hand-cut, aged 10 days · Accompaniments: cured egg yolk, smoked oil, rye crisp',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `CHEF'S NOTE — Venison Tartare
+
+The deer comes from Holkham Estate on the Norfolk coast — wild, unhurried, grazed on a landscape that has barely changed in centuries. We age the haunch for ten days before hand-cutting to order: nothing ground, nothing rushed.
+
+The yolk is cured overnight in a mix of salt and sugar until it takes on a translucent amber and a richness that anchors the tartare without overwhelming it. Smoked oil pressed from cold-pressed rapeseed; a rye crisp made in-house each morning.
+
+A dish about restraint and respect for the ingredient.`,
+  },
+  {
+    id: 'fatigue', tier: 'pyro', icon: '🔄',
+    name: 'Menu Fatigue Detector',
+    tagline: 'Find the dishes that have overstayed their welcome — and what to replace them with.',
+    how: 'Paste your menu or describe your current dish roster. EMBER identifies items showing signs of concept fatigue (overused formats, declining trend relevance, category saturation) and suggests fresher directions to explore.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Your current menu — ideally with any known sales data or dishes you\'ve had for 12+ months.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `MENU FATIGUE REPORT
+
+HIGH FATIGUE RISK:
+— Chicken Caesar Salad: concept peaked 2019–2022; now signals dated menu thinking. Retire or reinvent radically (try grain-based, lose the crouton, add a fermented element).
+— Beef burger with truffle fries: truffle on fries has crossed from premium signal to parody. Replace with beef dripping fries or pickled pepper fries for a more credible position.
+— Cheesecake (New York style): category-fatigued at your price point. Consider a set cream or parfait with more seasonal flexibility.
+
+LOWER RISK — KEEP:
+— Wood-fired flatbread: strong format, easy to seasonal-rotate toppings without a full reprint.
+— Slow-cooked short rib: evergreen at your tier; refresh the accompaniment rather than the dish itself.`,
+  },
+  {
+    id: 'bulkallergen', tier: 'pyro', icon: '📋',
+    name: 'Bulk Allergen Scanner',
+    tagline: 'Scan your entire menu at once — generate a full allergen matrix for kitchen and FOH.',
+    how: 'Paste your complete menu. EMBER produces a full allergen matrix: every dish as a row, all 14 allergens as columns. Download as a table suitable for your kitchen bible, staff training manual or legal compliance file.',
+    inputLabel: 'EXAMPLE INPUT',
+    input: 'Your full menu — all dishes, all ingredients.',
+    outputLabel: 'EMBER OUTPUT (sample)',
+    output: `ALLERGEN MATRIX (excerpt)
+
+Dish                     | Gluten | Dairy | Eggs | Nuts | Sesame | Soya | Fish | Celery
+Pomegranate Lamb         |   ●    |       |      |  ●   |   ●    |      |      |
+Smoked Salmon Tartare    |        |       |  ●   |      |        |      |  ●   |
+Wild Garlic Soup         |   ●    |  ●    |      |      |        |      |      |  ●
+Venison Tartare          |   ●    |       |  ●   |      |        |      |      |
+Tonka Bean Brûlée        |        |  ●    |  ●   |      |        |      |      |
+
+● = Present   ○ = May contain (cross-contamination)
+Full matrix includes all 14 UK mandatory allergens + adaptable flag.`,
+  },
+];
+
+let guideRendered = false;
+
+function renderGuide() {
+  if (guideRendered) return; // already built
+  guideRendered = true;
+  const wrap = document.getElementById('guide-layout-wrap');
+  if (!wrap) return;
+
+  const tierMeta = {
+    free:    { label: 'FREE TRIAL', color: '#d4a017', dot: '#d4a017' },
+    flame:   { label: 'FLAME', color: '#e8721a', dot: '#e8721a' },
+    inferno: { label: 'INFERNO', color: '#ff8a50', dot: '#ff8a50' },
+    pyro:    { label: 'PYRO', color: '#d4a017', dot: '#d4a017' },
+  };
+
+  // Group tools by tier
+  const groups = [
+    { tier: 'free',    label: 'FREE TRIAL — 2 uses each' },
+    { tier: 'flame',   label: 'FLAME — £12.99/mo' },
+    { tier: 'inferno', label: 'INFERNO — £29.99/mo' },
+    { tier: 'pyro',    label: 'PYRO — £62.99/mo' },
+  ];
+
+  const sidebarHTML = groups.map(g => {
+    const tools = GUIDE_TOOLS.filter(t => t.tier === g.tier);
+    const m = tierMeta[g.tier];
+    return `
+      <div class="guide-sidebar-group">
+        <div class="guide-sidebar-group-label">
+          <span style="width:7px;height:7px;border-radius:50%;background:${m.dot};display:inline-block;"></span>
+          ${g.label}
+        </div>
+        ${tools.map((t, _) => {
+          const idx = GUIDE_TOOLS.indexOf(t);
+          return `<button class="guide-sidebar-btn${idx===0?' active':''}" id="guide-sbtn-${idx}" onclick="goToGuide(${idx})">\
+<span class="tier-dot" style="background:${m.dot};"></span>${t.icon} ${t.name}</button>`;
+        }).join('')}
+      </div>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="guide-layout">
+      <div class="guide-sidebar" id="guide-sidebar">${sidebarHTML}</div>
+      <div class="guide-main" id="guide-main">
+        <div class="guide-top-bar">
+          <span class="guide-progress" id="guide-progress">1 / ${GUIDE_TOOLS.length}</span>
+          <button class="guide-tour-btn" id="guide-tour-btn" onclick="toggleGuideTour()">▶ AUTO-TOUR</button>
+          <div class="guide-arrows">
+            <button class="guide-arrow" onclick="stepGuide(-1)">← PREV</button>
+            <button class="guide-arrow" onclick="stepGuide(1)">NEXT →</button>
+          </div>
+        </div>
+        <div id="guide-card"><!-- filled by renderGuideCard --></div>
+      </div>
+    </div>`;
+
+  renderGuideCard();
+}
+
+function renderGuideCard() {
+  const t = GUIDE_TOOLS[guideIndex];
+  if (!t) return;
+  const tierMeta = {
+    free:    { label: 'FREE TRIAL', cls: 'free' },
+    flame:   { label: 'FLAME', cls: 'flame' },
+    inferno: { label: 'INFERNO', cls: 'inferno' },
+    pyro:    { label: 'PYRO', cls: 'pyro' },
+  };
+  const m = tierMeta[t.tier];
+  const isLocked = t.tier !== 'free'; // simplified — could check canAccess
+  const tierUpgradeLabels = { flame:'FLAME — £12.99/mo', inferno:'INFERNO — £29.99/mo', pyro:'PYRO — £62.99/mo' };
+
+  const ctaHTML = t.tier === 'free'
+    ? `<button class="guide-try-btn" onclick="switchTab('${t.id}',null)">→ TRY ${t.name.toUpperCase()} NOW</button>`
+    : `<button class="guide-unlock-btn" onclick="showUpgradeModal()">🔓 UNLOCK ON ${tierUpgradeLabels[t.tier] || t.tier.toUpperCase()}</button>`;
+
+  document.getElementById('guide-card').innerHTML = `
+    <div class="guide-tool-header">
+      <span class="guide-tool-icon">${t.icon}</span>
+      <div>
+        <div class="guide-tool-name">${t.name.toUpperCase()}</div>
+        <span class="guide-tier-badge ${m.cls}">${m.label}</span>
+      </div>
+    </div>
+    <div class="guide-tagline">"${t.tagline}"</div>
+    <div class="guide-how"><strong style="color:var(--cream);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;">HOW IT WORKS</strong><br><br>${t.how}</div>
+    <div class="guide-example${isLocked?' locked':''}">
+      <div class="guide-example-label">${t.inputLabel}</div>
+      <div class="guide-example-body" style="color:var(--dim);font-size:12px;">${escHtml(t.input)}</div>
+      <div class="guide-example-label" style="border-top:1px solid var(--smoke);">${t.outputLabel}</div>
+      <div class="guide-example-body">${escHtml(t.output).replace(/\n/g,'<br>').replace(/▸|—|✓|✗|●|○/g, s=>`<strong>${s}</strong>`)}</div>
+    </div>
+    <div class="guide-cta-row">
+      ${ctaHTML}
+      <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);">${guideIndex+1} OF ${GUIDE_TOOLS.length} TOOLS</span>
+    </div>`;
+
+  // Update sidebar
+  document.querySelectorAll('.guide-sidebar-btn').forEach((b,i) => b.classList.toggle('active', i===guideIndex));
+  const sbtn = document.getElementById('guide-sbtn-' + guideIndex);
+  if (sbtn) sbtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+  // Update progress
+  const prog = document.getElementById('guide-progress');
+  if (prog) prog.textContent = `${guideIndex + 1} / ${GUIDE_TOOLS.length}`;
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function goToGuide(idx) {
+  guideIndex = Math.max(0, Math.min(GUIDE_TOOLS.length - 1, idx));
+  renderGuideCard();
+}
+
+function stepGuide(dir) {
+  guideIndex = (guideIndex + dir + GUIDE_TOOLS.length) % GUIDE_TOOLS.length;
+  renderGuideCard();
+}
+
+function toggleGuideTour() {
+  guideTourActive = !guideTourActive;
+  const btn = document.getElementById('guide-tour-btn');
+  if (guideTourActive) {
+    if (btn) { btn.textContent = '⏸ PAUSE TOUR'; btn.classList.add('on'); }
+    guideTourTimer = setInterval(() => { stepGuide(1); }, 5000);
+  } else {
+    if (btn) { btn.textContent = '▶ AUTO-TOUR'; btn.classList.remove('on'); }
+    clearInterval(guideTourTimer);
+  }
 }
 
 // ─── DISH CREATOR ───────────────────────────────────────
@@ -4169,6 +5069,7 @@ function startCheckout(tier) {
 
 // ─── INIT ────────────────────────────────────────────────
 initAuth();
+renderActivatePanel(); // populate the panel immediately (will show sign-in prompt)
 bindImagePreview('dish-image', 'dish-image-preview', 'dish-image-thumb');
 bindImagePreview('psych-image', 'psych-image-preview', 'psych-image-thumb');
 
