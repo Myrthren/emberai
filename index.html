@@ -974,38 +974,28 @@
     background: rgba(212,160,23,0.08);
   }
 
-  /* ─── SPECIAL GLOWING NAV TABS ───────────────── */
+  /* ─── SPECIAL GLOWING NAV TABS (text-only glow) ─── */
   .tab-special {
-    background: linear-gradient(135deg, #d4a017, #e8721a) !important;
-    color: #0a0805 !important;
+    color: #d4a017 !important;
     font-weight: 700 !important;
-    border: none !important;
     letter-spacing: 1.5px !important;
-    padding: 12px 18px !important;
-    box-shadow: 0 0 16px rgba(212,160,23,0.65), 0 0 36px rgba(212,160,23,0.28), inset 0 1px 0 rgba(255,255,255,0.15);
-    animation: specialGlow 2.2s ease-in-out infinite;
+    text-shadow: 0 0 8px rgba(212,160,23,0.85), 0 0 18px rgba(212,160,23,0.5);
+    animation: specialTextGlow 2.2s ease-in-out infinite;
     position: relative;
     flex-shrink: 0;
   }
-  @keyframes specialGlow {
-    0%, 100% { box-shadow: 0 0 16px rgba(212,160,23,0.65), 0 0 36px rgba(212,160,23,0.28); }
-    50%       { box-shadow: 0 0 28px rgba(212,160,23,1.0), 0 0 60px rgba(212,160,23,0.55), 0 0 90px rgba(201,74,26,0.2); }
+  @keyframes specialTextGlow {
+    0%, 100% { color: #d4a017; text-shadow: 0 0 8px rgba(212,160,23,0.85), 0 0 18px rgba(212,160,23,0.5); }
+    50%       { color: #f5c842; text-shadow: 0 0 14px rgba(245,200,66,1.0), 0 0 32px rgba(212,160,23,0.7), 0 0 55px rgba(201,74,26,0.35); }
   }
-  .tab-special:hover { filter: brightness(1.12); }
-  .tab-special.active {
-    background: linear-gradient(135deg, #f5c842, #e8a020) !important;
-    box-shadow: 0 0 30px rgba(245,200,66,0.85), 0 0 70px rgba(212,160,23,0.6) !important;
-    color: #0a0805 !important;
-  }
+  .tab-special:hover { color: #f5c842 !important; text-shadow: 0 0 14px rgba(245,200,66,1.0), 0 0 32px rgba(212,160,23,0.7) !important; }
+  .tab-special.active { color: #f5c842 !important; text-shadow: 0 0 18px rgba(245,200,66,1.0), 0 0 40px rgba(212,160,23,0.8) !important; }
   /* Activated state — trial is live, calmer glow */
   .tab-special.activated {
-    background: linear-gradient(135deg, rgba(212,160,23,0.25), rgba(201,74,26,0.18)) !important;
     color: var(--gold) !important;
-    border: 1px solid rgba(212,160,23,0.5) !important;
-    box-shadow: 0 0 10px rgba(212,160,23,0.25) !important;
+    text-shadow: 0 0 6px rgba(212,160,23,0.45) !important;
     animation: none !important;
   }
-  .tab-special.activated:hover { filter: brightness(1.15); }
 
   /* ─── ACTIVATE FREE TRIAL PANEL ──────────────── */
   .activate-panel-wrap {
@@ -3112,26 +3102,28 @@ function renderActivatePanel() {
 
   // Signed in, free, trial already activated
   if (trialActivated) {
-    const totalLeft = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + freeUsesRemaining(t), 0);
-    const totalQuota = Object.keys(FREE_TRIAL_LIMITS).reduce((s, t) => s + FREE_TRIAL_LIMITS[t], 0);
-    el.innerHTML = `
-      <div class="activate-panel-wrap">
-        <div class="activate-ember-mark">EMBER</div>
-        <div class="activate-headline">TRIAL IS ACTIVE</div>
-        <div class="activate-sub">You have <strong style="color:var(--gold);">${totalLeft} of ${totalQuota}</strong> free uses remaining across all four tools.</div>
-        <div class="activate-features">
-          ${Object.entries(FREE_TRIAL_LIMITS).map(([t,lim]) => {
-            const left = freeUsesRemaining(t);
-            return `<div class="activate-feat" style="${left===0?'opacity:0.4;':''}">
-              ${left}/${lim} ${FREE_TRIAL_TOOL_LABELS[t].toUpperCase()}<span>${left===0?'EXHAUSTED':'remaining'}</span>
-            </div>`;
-          }).join('')}
-        </div>
-        ${totalLeft > 0
-          ? `<button class="btn-activate" onclick="switchTab('dish',null)">GO TO DISH CREATOR →</button>`
-          : `<button class="btn-activate" onclick="showUpgradeModal()">✦ UPGRADE TO CONTINUE</button>`}
-        <div class="activate-note">UPGRADE TO FLAME FOR UNLIMITED ACCESS · £12.99/MO · CANCEL ANYTIME</div>
-      </div>`;
+    const totalLeft = Object.keys(FREE_TRIAL_LIMITS).reduce(function(s, k) { return s + freeUsesRemaining(k); }, 0);
+    const totalQuota = Object.keys(FREE_TRIAL_LIMITS).reduce(function(s, k) { return s + FREE_TRIAL_LIMITS[k]; }, 0);
+    // Build feature tiles with plain concatenation — no nested templates
+    let featureHTML = '';
+    for (const tk of Object.keys(FREE_TRIAL_LIMITS)) {
+      const left = freeUsesRemaining(tk);
+      const lim = FREE_TRIAL_LIMITS[tk];
+      const opacity = left === 0 ? ' style="opacity:0.4;"' : '';
+      const status = left === 0 ? 'EXHAUSTED' : 'remaining';
+      featureHTML += '<div class="activate-feat"' + opacity + '>' + left + '/' + lim + ' ' + FREE_TRIAL_TOOL_LABELS[tk].toUpperCase() + '<span>' + status + '</span></div>';
+    }
+    const mainBtn = totalLeft > 0
+      ? '<button class="btn-activate" onclick="switchTab(\'dish\',null)">GO TO DISH CREATOR →</button>'
+      : '<button class="btn-activate" onclick="showUpgradeModal()">✦ UPGRADE TO CONTINUE</button>';
+    el.innerHTML = '<div class="activate-panel-wrap">'
+      + '<div class="activate-ember-mark">EMBER</div>'
+      + '<div class="activate-headline">TRIAL IS ACTIVE</div>'
+      + '<div class="activate-sub">You have <strong style="color:var(--gold);">' + totalLeft + ' of ' + totalQuota + '</strong> free uses remaining across all four tools.</div>'
+      + '<div class="activate-features">' + featureHTML + '</div>'
+      + mainBtn
+      + '<div class="activate-note">UPGRADE TO FLAME FOR UNLIMITED ACCESS · £12.99/MO · CANCEL ANYTIME</div>'
+      + '</div>';
     return;
   }
 
@@ -3488,22 +3480,24 @@ function renderGuide() {
     { tier: 'pyro',    label: 'PYRO — £62.99/mo' },
   ];
 
-  const sidebarHTML = groups.map(g => {
-    const tools = GUIDE_TOOLS.filter(t => t.tier === g.tier);
+  // Build sidebar with plain concatenation — avoids nested template literals
+  let sidebarHTML = '';
+  for (const g of groups) {
     const m = tierMeta[g.tier];
-    return `
-      <div class="guide-sidebar-group">
-        <div class="guide-sidebar-group-label">
-          <span style="width:7px;height:7px;border-radius:50%;background:${m.dot};display:inline-block;"></span>
-          ${g.label}
-        </div>
-        ${tools.map((t, _) => {
-          const idx = GUIDE_TOOLS.indexOf(t);
-          return `<button class="guide-sidebar-btn${idx===0?' active':''}" id="guide-sbtn-${idx}" onclick="goToGuide(${idx})">\
-<span class="tier-dot" style="background:${m.dot};"></span>${t.icon} ${t.name}</button>`;
-        }).join('')}
-      </div>`;
-  }).join('');
+    sidebarHTML += '<div class="guide-sidebar-group">';
+    sidebarHTML += '<div class="guide-sidebar-group-label">';
+    sidebarHTML += '<span style="width:7px;height:7px;border-radius:50%;background:' + m.dot + ';display:inline-block;"></span> ';
+    sidebarHTML += g.label + '</div>';
+    const gTools = GUIDE_TOOLS.filter(function(tool) { return tool.tier === g.tier; });
+    for (const gt of gTools) {
+      const idx = GUIDE_TOOLS.indexOf(gt);
+      const activeClass = idx === 0 ? ' active' : '';
+      sidebarHTML += '<button class="guide-sidebar-btn' + activeClass + '" id="guide-sbtn-' + idx + '" onclick="goToGuide(' + idx + ')">';
+      sidebarHTML += '<span class="tier-dot" style="background:' + m.dot + ';"></span>' + gt.icon + ' ' + gt.name;
+      sidebarHTML += '</button>';
+    }
+    sidebarHTML += '</div>';
+  }
 
   wrap.innerHTML = `
     <div class="guide-layout">
@@ -3541,6 +3535,12 @@ function renderGuideCard() {
     ? `<button class="guide-try-btn" onclick="switchTab('${t.id}',null)">→ TRY ${t.name.toUpperCase()} NOW</button>`
     : `<button class="guide-unlock-btn" onclick="showUpgradeModal()">🔓 UNLOCK ON ${tierUpgradeLabels[t.tier] || t.tier.toUpperCase()}</button>`;
 
+  // Pre-compute example HTML — avoids nested template literal in replace callback
+  const exampleInput = escHtml(t.input);
+  const exampleOutput = escHtml(t.output)
+    .replace(/\n/g, '<br>')
+    .replace(/▸|—|✓|✗|●|○/g, function(s) { return '<strong>' + s + '</strong>'; });
+
   document.getElementById('guide-card').innerHTML = `
     <div class="guide-tool-header">
       <span class="guide-tool-icon">${t.icon}</span>
@@ -3551,15 +3551,15 @@ function renderGuideCard() {
     </div>
     <div class="guide-tagline">"${t.tagline}"</div>
     <div class="guide-how"><strong style="color:var(--cream);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;">HOW IT WORKS</strong><br><br>${t.how}</div>
-    <div class="guide-example${isLocked?' locked':''}">
+    <div class="guide-example${isLocked ? ' locked' : ''}">
       <div class="guide-example-label">${t.inputLabel}</div>
-      <div class="guide-example-body" style="color:var(--dim);font-size:12px;">${escHtml(t.input)}</div>
+      <div class="guide-example-body" style="color:var(--dim);font-size:12px;">${exampleInput}</div>
       <div class="guide-example-label" style="border-top:1px solid var(--smoke);">${t.outputLabel}</div>
-      <div class="guide-example-body">${escHtml(t.output).replace(/\n/g,'<br>').replace(/▸|—|✓|✗|●|○/g, s=>`<strong>${s}</strong>`)}</div>
+      <div class="guide-example-body">${exampleOutput}</div>
     </div>
     <div class="guide-cta-row">
       ${ctaHTML}
-      <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);">${guideIndex+1} OF ${GUIDE_TOOLS.length} TOOLS</span>
+      <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);">${guideIndex + 1} OF ${GUIDE_TOOLS.length} TOOLS</span>
     </div>`;
 
   // Update sidebar
