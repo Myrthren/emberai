@@ -1510,7 +1510,7 @@
 <div class="noise"></div>
 
 <!-- ─── AUTH MODAL ─────────────────────────────── -->
-<div class="modal-overlay" id="auth-modal">
+<div class="modal-overlay hidden" id="auth-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeAuthModal()">✕</button>
     <div class="modal-title">EMBER</div>
@@ -2563,18 +2563,21 @@ async function setUser(user) {
   const { data } = await sb.from('subscriptions').select('plan').eq('user_id', user.id).single();
   userPlan = data?.plan || 'free';
 
-  // Load all-time tool usage
+  // Load all-time tool usage (also sets trialActivated)
   await loadToolUsage();
+
+  // Hide modal immediately — do this before UI updates so a thrown
+  // error in any display function can't leave the modal covering the page
+  document.getElementById('auth-modal').classList.add('hidden');
 
   // If this is a new sign-in (different user) show the trial banner again
   if (prevUserId !== user.id) resetTrialBannerDismissal();
 
-  updateHeaderAuth();
-  updateLockIcons();
-  updateFreeTrialDisplays();
-  updateActivateTab();
-  renderActivatePanel();
-  document.getElementById('auth-modal').classList.add('hidden');
+  try { updateHeaderAuth(); } catch(e) { console.warn('updateHeaderAuth', e); }
+  try { updateLockIcons(); } catch(e) { console.warn('updateLockIcons', e); }
+  try { updateFreeTrialDisplays(); } catch(e) { console.warn('updateFreeTrialDisplays', e); }
+  try { updateActivateTab(); } catch(e) { console.warn('updateActivateTab', e); }
+  try { renderActivatePanel(); } catch(e) { console.warn('renderActivatePanel', e); }
 }
 
 async function loadToolUsage() {
