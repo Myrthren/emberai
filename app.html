@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="new">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,9 @@
 <link rel="shortcut icon" type="image/png" href="/emberai-logo.png">
 <link rel="apple-touch-icon" href="/emberai-logo.png">
 <meta name="theme-color" content="#c94a1a">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Prevent flash of wrong theme -->
+<script>(function(){var t=localStorage.getItem('ember_theme')||'new';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -1486,13 +1488,768 @@
   ::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--ember); }
 
-  /* ─── RESPONSIVE ─────────────────────────── */
+  /* ─── RESPONSIVE (legacy) ───────────────────── */
   @media (max-width: 900px) {
-    header, .nav-tabs, .panel { padding-left: 24px; padding-right: 24px; }
+    [data-theme="legacy"] header,
+    [data-theme="legacy"] .nav-tabs,
+    [data-theme="legacy"] .panel { padding-left: 24px; padding-right: 24px; }
     .two-col { grid-template-columns: 1fr; }
     .custom-grid { grid-template-columns: 1fr 1fr; }
     .seasonal-grid { grid-template-columns: 1fr 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }  }
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     NEW THEME — black + orange/amber + white + sidebar
+     ══════════════════════════════════════════════════════ */
+
+  /* Theme variables */
+  :root {
+    --char: #000000;
+    --ash: #0b0b0b;
+    --ember: #ff5500;
+    --flame: #ff8500;
+    --gold: #ffa000;
+    --spark: #ffb700;
+    --smoke: #1c1c1c;
+    --cream: #ffffff;
+    --dim: #666666;
+    --green: #22c55e;
+    --sidebar-w: 224px;
+    --header-h: 62px;
+  }
+
+  [data-theme="legacy"] {
+    --char: #0a0805;
+    --ash: #1a1410;
+    --ember: #c94a1a;
+    --flame: #e8721a;
+    --gold: #d4a017;
+    --spark: #f5c842;
+    --smoke: #3d2e22;
+    --cream: #f0e6d3;
+    --dim: #8a6a50;
+    --green: #4a9a5a;
+  }
+
+  /* New theme body */
+  html:not([data-theme="legacy"]) body {
+    background: #000;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  html:not([data-theme="legacy"]) body::before {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(255,85,0,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 60%, rgba(255,100,0,0.03) 0%, transparent 50%);
+  }
+
+  /* ── Sidebar layout ─────────────────────────── */
+  html:not([data-theme="legacy"]) header {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-w);
+    right: 0;
+    z-index: 50;
+    padding: 0 28px;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(14px);
+    border-left: none;
+  }
+
+  html:not([data-theme="legacy"]) .logo { display: none; }
+  html:not([data-theme="legacy"]) .header-auth { margin-left: auto; gap: 10px; }
+
+  html:not([data-theme="legacy"]) .trial-banner {
+    margin-left: var(--sidebar-w);
+    position: sticky;
+    top: var(--header-h);
+  }
+
+  html:not([data-theme="legacy"]) .nav-tabs {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--sidebar-w);
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0 12px;
+    border-bottom: none;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    background: #050505;
+    gap: 1px;
+    z-index: 60;
+    scrollbar-width: thin;
+    scrollbar-color: #1a1a1a transparent;
+  }
+
+  html:not([data-theme="legacy"]) .panel {
+    margin-left: var(--sidebar-w);
+    padding-top: calc(var(--header-h) + 40px);
+    padding-left: 48px;
+    padding-right: 48px;
+    padding-bottom: 60px;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar tab styles ─────────────────────── */
+  html:not([data-theme="legacy"]) .tab {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #666;
+    padding: 9px 14px;
+    border-bottom: none;
+    border-radius: 6px;
+    margin: 0 8px;
+    width: calc(100% - 16px);
+    justify-content: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  html:not([data-theme="legacy"]) .tab:hover {
+    background: rgba(255,255,255,0.05);
+    color: #ddd;
+  }
+
+  html:not([data-theme="legacy"]) .tab.active {
+    background: rgba(255,133,0,0.1);
+    color: var(--flame);
+    border-bottom: none;
+    border-left: 2px solid var(--flame);
+    border-radius: 0 6px 6px 0;
+    margin-left: 6px;
+    padding-left: 20px;
+    width: calc(100% - 14px);
+  }
+
+  html:not([data-theme="legacy"]) .tab-special {
+    color: var(--gold) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    text-shadow: none !important;
+    animation: none !important;
+  }
+
+  html:not([data-theme="legacy"]) .tab-special.active {
+    color: var(--spark) !important;
+    background: rgba(255,183,0,0.08) !important;
+    border-left-color: var(--spark) !important;
+  }
+
+  html:not([data-theme="legacy"]) .tab .lock-icon { opacity: 0.3; font-size: 8px; }
+
+  /* ── Sidebar brand ──────────────────────────── */
+  .sidebar-brand {
+    display: none;
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+
+  html:not([data-theme="legacy"]) .sidebar-brand { display: block; }
+
+  .sidebar-brand-word {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #ff5500 0%, #ff8c00 55%, #ffb700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sidebar-brand-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ── Nav group labels ───────────────────────── */
+  .nav-group-label {
+    display: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #2e2e2e;
+    padding: 12px 16px 3px;
+  }
+
+  html:not([data-theme="legacy"]) .nav-group-label { display: block; }
+
+  .nav-divider {
+    display: none;
+    height: 1px;
+    background: rgba(255,255,255,0.04);
+    margin: 6px 0;
+  }
+
+  html:not([data-theme="legacy"]) .nav-divider { display: block; }
+
+  /* ── Sidebar bottom ─────────────────────────── */
+  .sidebar-spacer { display: none; flex: 1; min-height: 16px; }
+  html:not([data-theme="legacy"]) .sidebar-spacer { display: block; }
+
+  .sidebar-settings-btn {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    width: calc(100% - 16px);
+    margin: 6px 8px 0;
+    padding: 9px 14px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  html:not([data-theme="legacy"]) .sidebar-settings-btn { display: flex; }
+  .sidebar-settings-btn:hover { background: rgba(255,255,255,0.05); color: #999; }
+
+  /* ── Settings overlay ───────────────────────── */
+  .settings-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  .settings-overlay.open { display: flex; }
+
+  .settings-panel {
+    background: #0d0d0d;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: 2px solid var(--ember);
+    width: 420px;
+    max-width: calc(100vw - 48px);
+    padding: 36px;
+    position: relative;
+    animation: fadeUp 0.25s ease;
+    border-radius: 4px;
+  }
+
+  [data-theme="legacy"] .settings-panel {
+    background: var(--ash);
+    border-color: var(--smoke);
+    border-top-color: var(--ember);
+  }
+
+  .settings-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  [data-theme="legacy"] .settings-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--cream); }
+
+  .settings-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 28px;
+  }
+
+  [data-theme="legacy"] .settings-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--dim); }
+
+  .settings-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+  }
+
+  .settings-close:hover { color: #fff; }
+
+  .settings-section-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a3a3a;
+    margin-bottom: 12px;
+  }
+
+  [data-theme="legacy"] .settings-section-label { font-family: 'Space Mono', monospace; color: var(--dim); }
+
+  .theme-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .theme-option {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: none;
+    text-align: left;
+    position: relative;
+    width: 100%;
+  }
+
+  [data-theme="legacy"] .theme-option { border-color: var(--smoke); border-radius: 0; }
+
+  .theme-option:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.02); }
+  .theme-option.active { border-color: var(--flame); background: rgba(255,133,0,0.06); }
+  .theme-option.active::after { content: '✓'; position: absolute; top: 10px; right: 12px; color: var(--flame); font-size: 14px; font-weight: 700; }
+
+  .theme-option-preview {
+    height: 44px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  .theme-preview-new {
+    background: linear-gradient(135deg, #000 50%, #110800 100%);
+  }
+
+  .theme-preview-new::before {
+    content: 'EMBER';
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #ff5500, #ffb700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .theme-preview-legacy {
+    background: linear-gradient(135deg, #0a0805 50%, #1a1410 100%);
+    border-radius: 4px;
+  }
+
+  .theme-preview-legacy::before {
+    content: 'EMBER';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 5px;
+    background: linear-gradient(135deg, #e8721a, #d4a017);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .theme-option-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #eee;
+  }
+
+  .theme-option-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    color: #444;
+    margin-top: 2px;
+  }
+
+  /* ── Header settings button ─────────────────── */
+  .header-settings-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: #555;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    flex-shrink: 0;
+  }
+
+  .header-settings-btn:hover { border-color: rgba(255,255,255,0.28); color: #ccc; background: rgba(255,255,255,0.05); }
+
+  [data-theme="legacy"] .header-settings-btn { border-color: var(--smoke); color: var(--dim); }
+  [data-theme="legacy"] .header-settings-btn:hover { border-color: var(--ember); color: var(--flame); }
+
+  /* ── New theme: buttons ─────────────────────── */
+  html:not([data-theme="legacy"]) .btn-ghost {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    border-radius: 6px;
+    padding: 9px 18px;
+    border-color: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+  }
+
+  html:not([data-theme="legacy"]) .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  html:not([data-theme="legacy"]) .btn-fire {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #ff5000, #ff9000);
+    padding: 10px 20px;
+  }
+
+  html:not([data-theme="legacy"]) .btn-fire span { font-family: inherit; }
+
+  html:not([data-theme="legacy"]) .btn-small {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0;
+    border-radius: 4px;
+    border-color: rgba(255,255,255,0.1);
+    color: #888;
+    text-transform: none;
+  }
+
+  html:not([data-theme="legacy"]) .btn-small:hover { border-color: var(--flame); color: var(--flame); }
+
+  /* ── New theme: typography ──────────────────── */
+  html:not([data-theme="legacy"]) .section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    letter-spacing: 0;
+    background: linear-gradient(135deg, #ff5500 0%, #ffa000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: unset;
+    margin-bottom: 6px;
+  }
+
+  html:not([data-theme="legacy"]) .section-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 36px;
+  }
+
+  html:not([data-theme="legacy"]) label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: none;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  html:not([data-theme="legacy"]) .dish-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0;
+    background: linear-gradient(135deg, #ff6b00, #ffa500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: unset;
+  }
+
+  html:not([data-theme="legacy"]) .dish-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-size: 15px;
+    color: #ccc;
+  }
+
+  html:not([data-theme="legacy"]) .modal-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+  }
+
+  html:not([data-theme="legacy"]) .modal-sub {
+    font-style: normal;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+  }
+
+  html:not([data-theme="legacy"]) .modal-tab {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  html:not([data-theme="legacy"]) .modal-tab.active { color: var(--flame); border-bottom-color: var(--flame); }
+
+  html:not([data-theme="legacy"]) .pricing-tier {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  html:not([data-theme="legacy"]) .pricing-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    letter-spacing: -1px;
+  }
+
+  html:not([data-theme="legacy"]) .pricing-period {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+  }
+
+  html:not([data-theme="legacy"]) .pricing-features li {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    border-bottom-color: rgba(255,255,255,0.05);
+    color: #666;
+  }
+
+  html:not([data-theme="legacy"]) .pricing-features li.included { color: #ccc; }
+
+  /* ── New theme: form inputs ─────────────────── */
+  html:not([data-theme="legacy"]) input,
+  html:not([data-theme="legacy"]) textarea,
+  html:not([data-theme="legacy"]) select {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    background: #0d0d0d;
+    border-color: rgba(255,255,255,0.09);
+    border-radius: 6px;
+    color: #e8e8e8;
+  }
+
+  html:not([data-theme="legacy"]) input:focus,
+  html:not([data-theme="legacy"]) textarea:focus,
+  html:not([data-theme="legacy"]) select:focus {
+    border-color: var(--flame);
+    box-shadow: 0 0 0 3px rgba(255,133,0,0.12);
+  }
+
+  html:not([data-theme="legacy"]) select option { background: #111; }
+
+  /* ── New theme: output / cards ──────────────── */
+  html:not([data-theme="legacy"]) .output-area {
+    background: #080808;
+    border-color: rgba(255,255,255,0.07);
+    border-left-color: var(--flame);
+    border-radius: 0 6px 6px 0;
+  }
+
+  html:not([data-theme="legacy"]) .seasonal-card,
+  html:not([data-theme="legacy"]) .saved-menu-card,
+  html:not([data-theme="legacy"]) .price-item {
+    background: #0c0c0c;
+    border-color: rgba(255,255,255,0.06);
+    border-radius: 8px;
+  }
+
+  html:not([data-theme="legacy"]) .seasonal-card:hover,
+  html:not([data-theme="legacy"]) .saved-menu-card:hover { border-color: rgba(255,133,0,0.35); }
+
+  html:not([data-theme="legacy"]) .seasonal-card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0;
+    color: var(--flame);
+  }
+
+  html:not([data-theme="legacy"]) .saved-menu-card-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0;
+  }
+
+  html:not([data-theme="legacy"]) .saved-menu-card-meta {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+  }
+
+  /* ── New theme: modal ───────────────────────── */
+  html:not([data-theme="legacy"]) .modal {
+    background: #0d0d0d;
+    border-color: rgba(255,255,255,0.08);
+    border-top-color: var(--ember);
+    border-radius: 10px;
+  }
+
+  html:not([data-theme="legacy"]) .modal-overlay {
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+  }
+
+  /* ── New theme: pricing cards ───────────────── */
+  html:not([data-theme="legacy"]) .pricing-card {
+    background: #0c0c0c;
+    border-color: rgba(255,255,255,0.06);
+    border-radius: 10px;
+  }
+
+  html:not([data-theme="legacy"]) .pricing-card:hover { border-color: rgba(255,133,0,0.3); transform: translateY(-3px); }
+
+  html:not([data-theme="legacy"]) .pricing-card.featured {
+    border-color: var(--flame);
+    border-top: none;
+    box-shadow: 0 0 0 1px rgba(255,133,0,0.3), 0 8px 32px rgba(255,133,0,0.1);
+  }
+
+  /* ── New theme: guide ───────────────────────── */
+  html:not([data-theme="legacy"]) .guide-layout { border-color: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; }
+  html:not([data-theme="legacy"]) .guide-sidebar { background: #050505; border-right-color: rgba(255,255,255,0.05); }
+  html:not([data-theme="legacy"]) .guide-sidebar-btn { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; letter-spacing: 0; text-transform: none; color: #555; }
+  html:not([data-theme="legacy"]) .guide-sidebar-btn:hover { color: #ccc; }
+  html:not([data-theme="legacy"]) .guide-sidebar-btn.active { color: var(--gold); background: rgba(255,160,0,0.1); border-left-color: var(--gold); }
+  html:not([data-theme="legacy"]) .guide-tool-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: 0; font-size: 28px; }
+  html:not([data-theme="legacy"]) .guide-example { background: #050505; border-color: rgba(255,255,255,0.06); border-left-color: var(--gold); }
+  html:not([data-theme="legacy"]) .guide-try-btn { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; letter-spacing: 0; border-radius: 5px; }
+  html:not([data-theme="legacy"]) .guide-unlock-btn { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0; border-radius: 5px; }
+
+  /* ── New theme: trial banner ────────────────── */
+  html:not([data-theme="legacy"]) .trial-banner {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0;
+    background: rgba(0,0,0,0.97);
+    border-bottom-color: rgba(255,160,0,0.15);
+  }
+
+  /* ── New theme: activate panel ──────────────── */
+  html:not([data-theme="legacy"]) .activate-ember-mark {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: 6px;
+  }
+
+  html:not([data-theme="legacy"]) .activate-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  html:not([data-theme="legacy"]) .activate-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-size: 15px;
+  }
+
+  html:not([data-theme="legacy"]) .activate-feat {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0;
+    border-radius: 6px;
+  }
+
+  html:not([data-theme="legacy"]) .btn-activate {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+  }
+
+  /* ── New theme: scrollbar ───────────────────── */
+  html:not([data-theme="legacy"]) ::-webkit-scrollbar-track { background: #000; }
+  html:not([data-theme="legacy"]) ::-webkit-scrollbar-thumb { background: #1a1a1a; }
+  html:not([data-theme="legacy"]) ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+  /* ── New theme: ember divider ───────────────── */
+  html:not([data-theme="legacy"]) .ember-divider::before,
+  html:not([data-theme="legacy"]) .ember-divider::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06)); }
+  html:not([data-theme="legacy"]) .ember-divider::after { background: linear-gradient(90deg, rgba(255,255,255,0.06), transparent); }
+
+  /* ── New theme: loading bars ────────────────── */
+  html:not([data-theme="legacy"]) .flame-loader span { border-radius: 3px; }
+
+  /* ── Responsive sidebar ─────────────────────── */
+  @media (max-width: 900px) {
+    html:not([data-theme="legacy"]) header { left: 0; }
+    html:not([data-theme="legacy"]) .trial-banner { margin-left: 0; top: var(--header-h); }
+    html:not([data-theme="legacy"]) .nav-tabs {
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 56px;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 6px;
+      border-right: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.96);
+    }
+    html:not([data-theme="legacy"]) .panel { margin-left: 0; padding-bottom: 76px; padding-left: 24px; padding-right: 24px; }
+    html:not([data-theme="legacy"]) .sidebar-brand,
+    html:not([data-theme="legacy"]) .nav-group-label,
+    html:not([data-theme="legacy"]) .nav-divider,
+    html:not([data-theme="legacy"]) .sidebar-spacer,
+    html:not([data-theme="legacy"]) .sidebar-settings-btn { display: none !important; }
+    html:not([data-theme="legacy"]) .tab {
+      white-space: nowrap; border-radius: 4px; margin: 8px 2px;
+      padding: 6px 11px; font-size: 11px; width: auto; flex-shrink: 0;
+    }
+    html:not([data-theme="legacy"]) .tab.active {
+      border-left: none; border-bottom: 2px solid var(--flame);
+      border-radius: 0; margin-left: 2px; padding-left: 11px; width: auto;
+    }
+    html:not([data-theme="legacy"]) .header-auth, html:not([data-theme="legacy"]) .header-settings-btn { display: flex; }
+  }
 </style>
 </head>
 <body>
@@ -1670,36 +2427,87 @@
     <button class="btn-ghost" onclick="showAuthModal()">SIGN IN</button>
     <button class="btn-fire" onclick="showAuthModal('register')"><span>GET STARTED</span></button>
   </div>
+  <button class="header-settings-btn" onclick="openSettings()" title="Settings">⚙</button>
 </header>
+
+<!-- ─── SETTINGS OVERLAY ────────────────────────── -->
+<div class="settings-overlay" id="settings-overlay" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-panel">
+    <button class="settings-close" onclick="closeSettings()">✕</button>
+    <div class="settings-title">Settings</div>
+    <div class="settings-sub">Customise your EMBER experience</div>
+    <div class="settings-section-label">Theme</div>
+    <div class="theme-options">
+      <button class="theme-option active" data-theme="new" onclick="setTheme('new')">
+        <div class="theme-option-preview theme-preview-new"></div>
+        <div class="theme-option-name">Modern</div>
+        <div class="theme-option-desc">Black · Orange · White</div>
+      </button>
+      <button class="theme-option" data-theme="legacy" onclick="setTheme('legacy')">
+        <div class="theme-option-preview theme-preview-legacy"></div>
+        <div class="theme-option-name">Classic</div>
+        <div class="theme-option-desc">Ember · Gold · Charcoal</div>
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ─── GLOBAL FREE TRIAL STATUS BANNER ────────── -->
 <div class="trial-banner" id="trial-banner"></div>
 
 <!-- ─── NAVIGATION ────────────────────────────── -->
 <nav class="nav-tabs" id="main-nav">
-  <!-- Special glowing tabs — always first -->
-  <button class="tab tab-special" id="tab-activate" onclick="switchTab('activate', event)">✦ ACTIVATE FREE TRIAL</button>
-  <button class="tab tab-special" onclick="switchTab('guide', event)">📖 GUIDE</button>
-  <button class="tab tab-special" onclick="switchTab('feedback', event)">💬 SUPPORT</button>
-  <!-- Tool tabs -->
-  <button class="tab" onclick="switchTab('dish', event)">Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
-  <button class="tab" onclick="switchTab('menu', event)">Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
-  <button class="tab" onclick="switchTab('psych', event)">Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
-  <button class="tab" onclick="switchTab('seasonal', event)">Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
-  <button class="tab" onclick="switchTab('saved', event)">Saved Menus <span class="lock-icon" id="lock-saved">🔒</span></button>
-  <button class="tab" onclick="switchTab('translate', event)">Translation <span class="lock-icon" id="lock-translate">🔒</span></button>
-  <button class="tab" onclick="switchTab('allergen', event)">Allergens <span class="lock-icon" id="lock-allergen">🔒</span></button>
-  <button class="tab" onclick="switchTab('price', event)">Price Optimiser <span class="lock-icon" id="lock-price">🔒</span></button>
-  <button class="tab" onclick="switchTab('qr', event)">QR Builder <span class="lock-icon" id="lock-qr">🔒</span></button>
-  <button class="tab" onclick="switchTab('competitor', event)">Competitor Analyser <span class="lock-icon" id="lock-competitor">🔒</span></button>
-  <button class="tab" onclick="switchTab('trends', event)">Trend Radar <span class="lock-icon" id="lock-trends">🔒</span></button>
-  <button class="tab" onclick="switchTab('upsell', event)">Upsell Scripts <span class="lock-icon" id="lock-upsell">🔒</span></button>
-  <button class="tab" onclick="switchTab('roi', event)">ROI Estimator <span class="lock-icon" id="lock-roi">🔒</span></button>
-  <button class="tab" onclick="switchTab('brandvoice', event)">Brand Voice <span class="lock-icon" id="lock-brandvoice">🔒</span></button>
-  <button class="tab" onclick="switchTab('chefnotes', event)">Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
-  <button class="tab" onclick="switchTab('fatigue', event)">Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
-  <button class="tab" onclick="switchTab('bulkallergen', event)">Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
-  <button class="tab" onclick="switchTab('pricing', event)">Pricing</button>
+  <!-- Sidebar brand (new theme only) -->
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-word">EMBER</div>
+    <div class="sidebar-brand-sub">Menu Intelligence</div>
+  </div>
+
+  <!-- Quick actions -->
+  <button class="tab tab-special" id="tab-activate" onclick="switchTab('activate', event)">✦ Activate Trial</button>
+  <button class="tab tab-special" onclick="switchTab('guide', event)">📖 Guide</button>
+  <button class="tab tab-special" onclick="switchTab('feedback', event)">💬 Support</button>
+
+  <div class="nav-divider"></div>
+  <div class="nav-group-label">Free Tools</div>
+
+  <button class="tab" onclick="switchTab('dish', event)">🍽️ Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
+  <button class="tab" onclick="switchTab('menu', event)">📋 Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
+  <button class="tab" onclick="switchTab('psych', event)">🧠 Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
+  <button class="tab" onclick="switchTab('seasonal', event)">🌿 Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
+
+  <div class="nav-divider"></div>
+  <div class="nav-group-label">Flame</div>
+
+  <button class="tab" onclick="switchTab('saved', event)">💾 Saved Menus <span class="lock-icon" id="lock-saved">🔒</span></button>
+
+  <div class="nav-divider"></div>
+  <div class="nav-group-label">Inferno</div>
+
+  <button class="tab" onclick="switchTab('translate', event)">🌍 Translation <span class="lock-icon" id="lock-translate">🔒</span></button>
+  <button class="tab" onclick="switchTab('allergen', event)">⚠️ Allergens <span class="lock-icon" id="lock-allergen">🔒</span></button>
+  <button class="tab" onclick="switchTab('price', event)">💷 Price Optimiser <span class="lock-icon" id="lock-price">🔒</span></button>
+  <button class="tab" onclick="switchTab('qr', event)">📱 QR Builder <span class="lock-icon" id="lock-qr">🔒</span></button>
+
+  <div class="nav-divider"></div>
+  <div class="nav-group-label">Pyro</div>
+
+  <button class="tab" onclick="switchTab('competitor', event)">🔍 Competitor Analyser <span class="lock-icon" id="lock-competitor">🔒</span></button>
+  <button class="tab" onclick="switchTab('trends', event)">📡 Trend Radar <span class="lock-icon" id="lock-trends">🔒</span></button>
+  <button class="tab" onclick="switchTab('upsell', event)">🎯 Upsell Scripts <span class="lock-icon" id="lock-upsell">🔒</span></button>
+  <button class="tab" onclick="switchTab('roi', event)">📊 ROI Estimator <span class="lock-icon" id="lock-roi">🔒</span></button>
+  <button class="tab" onclick="switchTab('brandvoice', event)">✍️ Brand Voice <span class="lock-icon" id="lock-brandvoice">🔒</span></button>
+  <button class="tab" onclick="switchTab('chefnotes', event)">👨‍🍳 Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
+  <button class="tab" onclick="switchTab('fatigue', event)">🔄 Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
+  <button class="tab" onclick="switchTab('bulkallergen', event)">📦 Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
+
+  <div class="nav-divider"></div>
+
+  <button class="tab" onclick="switchTab('pricing', event)">💳 Pricing</button>
+
+  <!-- Sidebar bottom (new theme only) -->
+  <div class="sidebar-spacer"></div>
+  <button class="sidebar-settings-btn" onclick="openSettings()">⚙️ Settings</button>
 </nav>
 
 <!-- ─── ACTIVATE FREE TRIAL ───────────────────── -->
@@ -5069,6 +5877,37 @@ function startCheckout(tier) {
   // Redirect to PayPal subscription page via Netlify function
   window.location.href = `/.netlify/functions/create-subscription?plan=${tier}&userId=${currentUser.id}&planId=${planId}`;
 }
+
+// ─── SETTINGS + THEME ────────────────────────────────────
+function openSettings() {
+  const overlay = document.getElementById('settings-overlay');
+  if (!overlay) return;
+  // Sync active state
+  const current = document.documentElement.getAttribute('data-theme') || 'new';
+  overlay.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === current);
+  });
+  overlay.classList.add('open');
+}
+
+function closeSettings() {
+  const overlay = document.getElementById('settings-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('ember_theme', theme);
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === theme);
+  });
+}
+
+// Apply saved theme on load (also done inline in <head> to prevent FOUC)
+(function() {
+  const saved = localStorage.getItem('ember_theme') || 'new';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
 
 // ─── INIT ────────────────────────────────────────────────
 initAuth();
