@@ -1507,10 +1507,10 @@
   :root {
     --char: #000000;
     --ash: #0b0b0b;
-    --ember: #ff5500;
-    --flame: #ff8500;
-    --gold: #ffa000;
-    --spark: #ffb700;
+    --ember: #c2410c;
+    --flame: #ea580c;
+    --gold: #f97316;
+    --spark: #fb923c;
     --smoke: #1c1c1c;
     --cream: #ffffff;
     --dim: #666666;
@@ -1540,8 +1540,8 @@
 
   html:not([data-theme="legacy"]) body::before {
     background:
-      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(255,85,0,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 60%, rgba(255,100,0,0.03) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(194,65,12,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 60%, rgba(234,88,12,0.02) 0%, transparent 50%);
   }
 
   /* ── Sidebar layout ─────────────────────────── */
@@ -1625,7 +1625,7 @@
   }
 
   html:not([data-theme="legacy"]) .tab.active {
-    background: rgba(255,133,0,0.1);
+    background: rgba(234,88,12,0.1);
     color: var(--flame);
     border-bottom: none;
     border-left: 2px solid var(--flame);
@@ -1645,7 +1645,7 @@
 
   html:not([data-theme="legacy"]) .tab-special.active {
     color: var(--spark) !important;
-    background: rgba(255,183,0,0.08) !important;
+    background: rgba(251,146,60,0.08) !important;
     border-left-color: var(--spark) !important;
   }
 
@@ -1667,7 +1667,7 @@
     font-size: 22px;
     font-weight: 800;
     letter-spacing: 4px;
-    background: linear-gradient(135deg, #ff5500 0%, #ff8c00 55%, #ffb700 100%);
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 55%, #f97316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1678,7 +1678,7 @@
     font-size: 9px;
     font-weight: 500;
     letter-spacing: 2px;
-    color: #333;
+    color: #444;
     text-transform: uppercase;
     margin-top: 2px;
   }
@@ -1831,7 +1831,7 @@
   [data-theme="legacy"] .theme-option { border-color: var(--smoke); border-radius: 0; }
 
   .theme-option:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.02); }
-  .theme-option.active { border-color: var(--flame); background: rgba(255,133,0,0.06); }
+  .theme-option.active { border-color: var(--flame); background: rgba(234,88,12,0.06); }
   .theme-option.active::after { content: '✓'; position: absolute; top: 10px; right: 12px; color: var(--flame); font-size: 14px; font-weight: 700; }
 
   .theme-option-preview {
@@ -1854,7 +1854,7 @@
     font-size: 15px;
     font-weight: 800;
     letter-spacing: 3px;
-    background: linear-gradient(135deg, #ff5500, #ffb700);
+    background: linear-gradient(135deg, #c2410c, #f97316);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1916,45 +1916,57 @@
   /* ── New theme: buttons ─────────────────────── */
   html:not([data-theme="legacy"]) .btn-ghost {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 0;
-    border-radius: 6px;
-    padding: 9px 18px;
-    border-color: rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.75);
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
   }
 
   html:not([data-theme="legacy"]) .btn-ghost:hover {
-    border-color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.2);
     color: #fff;
-    background: rgba(255,255,255,0.05);
   }
 
   html:not([data-theme="legacy"]) .btn-fire {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #ff5000, #ff9000);
-    padding: 10px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 45%, #f97316 100%);
+    color: #fff;
+    padding: 11px 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 0 18px rgba(194,65,12,0.3);
+    transition: box-shadow 0.2s, transform 0.18s;
   }
 
-  html:not([data-theme="legacy"]) .btn-fire span { font-family: inherit; }
+  html:not([data-theme="legacy"]) .btn-fire:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 30px rgba(234,88,12,0.45);
+    transform: translateY(-1px);
+  }
+
+  html:not([data-theme="legacy"]) .btn-fire::before { display: none; }
+  html:not([data-theme="legacy"]) .btn-fire span { font-family: inherit; color: inherit; }
 
   html:not([data-theme="legacy"]) .btn-small {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0;
-    border-radius: 4px;
-    border-color: rgba(255,255,255,0.1);
-    color: #888;
+    border-radius: 6px;
+    border-color: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    color: #777;
     text-transform: none;
   }
 
-  html:not([data-theme="legacy"]) .btn-small:hover { border-color: var(--flame); color: var(--flame); }
+  html:not([data-theme="legacy"]) .btn-small:hover { border-color: var(--flame); color: var(--flame); background: rgba(234,88,12,0.06); }
 
   /* ── New theme: typography ──────────────────── */
   html:not([data-theme="legacy"]) .section-title {
@@ -1962,7 +1974,7 @@
     font-weight: 800;
     font-size: 36px;
     letter-spacing: 0;
-    background: linear-gradient(135deg, #ff5500 0%, #ffa000 100%);
+    background: linear-gradient(135deg, #c2410c 0%, #f97316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1974,7 +1986,7 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-style: normal;
     font-size: 15px;
-    color: #555;
+    color: #888;
     margin-bottom: 36px;
   }
 
@@ -1984,7 +1996,7 @@
     font-weight: 600;
     letter-spacing: 0.3px;
     text-transform: none;
-    color: #555;
+    color: #777;
     margin-bottom: 8px;
   }
 
@@ -1993,7 +2005,7 @@
     font-weight: 800;
     font-size: 22px;
     letter-spacing: 0;
-    background: linear-gradient(135deg, #ff6b00, #ffa500);
+    background: linear-gradient(135deg, #c2410c, #f97316);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -2074,7 +2086,7 @@
   html:not([data-theme="legacy"]) textarea:focus,
   html:not([data-theme="legacy"]) select:focus {
     border-color: var(--flame);
-    box-shadow: 0 0 0 3px rgba(255,133,0,0.12);
+    box-shadow: 0 0 0 3px rgba(234,88,12,0.12);
   }
 
   html:not([data-theme="legacy"]) select option { background: #111; }
@@ -2138,12 +2150,12 @@
     border-radius: 10px;
   }
 
-  html:not([data-theme="legacy"]) .pricing-card:hover { border-color: rgba(255,133,0,0.3); transform: translateY(-3px); }
+  html:not([data-theme="legacy"]) .pricing-card:hover { border-color: rgba(234,88,12,0.3); transform: translateY(-3px); }
 
   html:not([data-theme="legacy"]) .pricing-card.featured {
     border-color: var(--flame);
     border-top: none;
-    box-shadow: 0 0 0 1px rgba(255,133,0,0.3), 0 8px 32px rgba(255,133,0,0.1);
+    box-shadow: 0 0 0 1px rgba(234,88,12,0.3), 0 8px 32px rgba(234,88,12,0.1);
   }
 
   /* ── New theme: guide ───────────────────────── */
@@ -2163,7 +2175,7 @@
     font-size: 11px;
     letter-spacing: 0;
     background: rgba(0,0,0,0.97);
-    border-bottom-color: rgba(255,160,0,0.15);
+    border-bottom-color: rgba(249,115,22,0.1);
   }
 
   /* ── New theme: activate panel ──────────────── */
@@ -2171,7 +2183,7 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
     font-size: 56px;
-    letter-spacing: 6px;
+    letter-spacing: -2px;
   }
 
   html:not([data-theme="legacy"]) .activate-headline {
@@ -2465,49 +2477,49 @@
 
   <!-- Quick actions -->
   <button class="tab tab-special" id="tab-activate" onclick="switchTab('activate', event)">✦ Activate Trial</button>
-  <button class="tab tab-special" onclick="switchTab('guide', event)">📖 Guide</button>
-  <button class="tab tab-special" onclick="switchTab('feedback', event)">💬 Support</button>
+  <button class="tab tab-special" onclick="switchTab('guide', event)">Guide</button>
+  <button class="tab tab-special" onclick="switchTab('feedback', event)">Support</button>
 
   <div class="nav-divider"></div>
   <div class="nav-group-label">Free Tools</div>
 
-  <button class="tab" onclick="switchTab('dish', event)">🍽️ Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
-  <button class="tab" onclick="switchTab('menu', event)">📋 Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
-  <button class="tab" onclick="switchTab('psych', event)">🧠 Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
-  <button class="tab" onclick="switchTab('seasonal', event)">🌿 Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
+  <button class="tab" onclick="switchTab('dish', event)">Dish Creator <span class="tab-trial-count" id="tabcount-dish"></span></button>
+  <button class="tab" onclick="switchTab('menu', event)">Menu Builder <span class="lock-icon" id="lock-menu">🔒</span><span class="tab-trial-count" id="tabcount-menu"></span></button>
+  <button class="tab" onclick="switchTab('psych', event)">Menu Psychology <span class="lock-icon" id="lock-psych">🔒</span><span class="tab-trial-count" id="tabcount-psych"></span></button>
+  <button class="tab" onclick="switchTab('seasonal', event)">Seasonal Ideas <span class="lock-icon" id="lock-seasonal">🔒</span><span class="tab-trial-count" id="tabcount-seasonal"></span></button>
 
   <div class="nav-divider"></div>
   <div class="nav-group-label">Flame</div>
 
-  <button class="tab" onclick="switchTab('saved', event)">💾 Saved Menus <span class="lock-icon" id="lock-saved">🔒</span></button>
+  <button class="tab" onclick="switchTab('saved', event)">Saved Menus <span class="lock-icon" id="lock-saved">🔒</span></button>
 
   <div class="nav-divider"></div>
   <div class="nav-group-label">Inferno</div>
 
-  <button class="tab" onclick="switchTab('translate', event)">🌍 Translation <span class="lock-icon" id="lock-translate">🔒</span></button>
-  <button class="tab" onclick="switchTab('allergen', event)">⚠️ Allergens <span class="lock-icon" id="lock-allergen">🔒</span></button>
-  <button class="tab" onclick="switchTab('price', event)">💷 Price Optimiser <span class="lock-icon" id="lock-price">🔒</span></button>
-  <button class="tab" onclick="switchTab('qr', event)">📱 QR Builder <span class="lock-icon" id="lock-qr">🔒</span></button>
+  <button class="tab" onclick="switchTab('translate', event)">Translation <span class="lock-icon" id="lock-translate">🔒</span></button>
+  <button class="tab" onclick="switchTab('allergen', event)">Allergens <span class="lock-icon" id="lock-allergen">🔒</span></button>
+  <button class="tab" onclick="switchTab('price', event)">Price Optimiser <span class="lock-icon" id="lock-price">🔒</span></button>
+  <button class="tab" onclick="switchTab('qr', event)">QR Builder <span class="lock-icon" id="lock-qr">🔒</span></button>
 
   <div class="nav-divider"></div>
   <div class="nav-group-label">Pyro</div>
 
-  <button class="tab" onclick="switchTab('competitor', event)">🔍 Competitor Analyser <span class="lock-icon" id="lock-competitor">🔒</span></button>
-  <button class="tab" onclick="switchTab('trends', event)">📡 Trend Radar <span class="lock-icon" id="lock-trends">🔒</span></button>
-  <button class="tab" onclick="switchTab('upsell', event)">🎯 Upsell Scripts <span class="lock-icon" id="lock-upsell">🔒</span></button>
-  <button class="tab" onclick="switchTab('roi', event)">📊 ROI Estimator <span class="lock-icon" id="lock-roi">🔒</span></button>
-  <button class="tab" onclick="switchTab('brandvoice', event)">✍️ Brand Voice <span class="lock-icon" id="lock-brandvoice">🔒</span></button>
-  <button class="tab" onclick="switchTab('chefnotes', event)">👨‍🍳 Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
-  <button class="tab" onclick="switchTab('fatigue', event)">🔄 Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
-  <button class="tab" onclick="switchTab('bulkallergen', event)">📦 Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
+  <button class="tab" onclick="switchTab('competitor', event)">Competitor Analyser <span class="lock-icon" id="lock-competitor">🔒</span></button>
+  <button class="tab" onclick="switchTab('trends', event)">Trend Radar <span class="lock-icon" id="lock-trends">🔒</span></button>
+  <button class="tab" onclick="switchTab('upsell', event)">Upsell Scripts <span class="lock-icon" id="lock-upsell">🔒</span></button>
+  <button class="tab" onclick="switchTab('roi', event)">ROI Estimator <span class="lock-icon" id="lock-roi">🔒</span></button>
+  <button class="tab" onclick="switchTab('brandvoice', event)">Brand Voice <span class="lock-icon" id="lock-brandvoice">🔒</span></button>
+  <button class="tab" onclick="switchTab('chefnotes', event)">Chef's Notes <span class="lock-icon" id="lock-chefnotes">🔒</span></button>
+  <button class="tab" onclick="switchTab('fatigue', event)">Menu Fatigue <span class="lock-icon" id="lock-fatigue">🔒</span></button>
+  <button class="tab" onclick="switchTab('bulkallergen', event)">Bulk Allergens <span class="lock-icon" id="lock-bulkallergen">🔒</span></button>
 
   <div class="nav-divider"></div>
 
-  <button class="tab" onclick="switchTab('pricing', event)">💳 Pricing</button>
+  <button class="tab" onclick="switchTab('pricing', event)">Pricing</button>
 
   <!-- Sidebar bottom (new theme only) -->
   <div class="sidebar-spacer"></div>
-  <button class="sidebar-settings-btn" onclick="openSettings()">⚙️ Settings</button>
+  <button class="sidebar-settings-btn" onclick="openSettings()">Settings</button>
 </nav>
 
 <!-- ─── ACTIVATE FREE TRIAL ───────────────────── -->

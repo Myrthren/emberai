@@ -9,19 +9,19 @@
 <link rel="shortcut icon" type="image/png" href="/emberai-logo.png">
 <link rel="apple-touch-icon" href="/emberai-logo.png">
 <meta name="theme-color" content="#c94a1a">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --char: #0a0805;
-    --ash: #1a1410;
-    --ember: #c94a1a;
-    --flame: #e8721a;
-    --gold: #d4a017;
-    --spark: #f5c842;
-    --smoke: #3d2e22;
-    --cream: #f0e6d3;
-    --dim: #8a6a50;
-    --green: #4a9a5a;
+    --char: #000000;
+    --ash: #0b0b0b;
+    --ember: #c2410c;
+    --flame: #ea580c;
+    --gold: #f97316;
+    --spark: #fb923c;
+    --smoke: #1c1c1c;
+    --cream: #ffffff;
+    --dim: #6b7280;
+    --green: #22c55e;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,9 +29,9 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--char);
-    color: var(--cream);
-    font-family: 'Cormorant Garamond', serif;
+    background: #000;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -59,7 +59,7 @@
     padding: 20px 60px;
     background: rgba(10,8,5,0.85);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201,74,26,0.15);
+    border-bottom: 1px solid rgba(194,65,12,0.12);
     transition: padding 0.3s;
   }
 
@@ -73,7 +73,7 @@
   }
 
   .header-logo-word {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 36px;
     line-height: 0.9;
     letter-spacing: 6px;
@@ -85,7 +85,7 @@
   }
 
   .header-logo-sub {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 3px;
     color: var(--dim);
@@ -108,7 +108,7 @@
   }
 
   .header-link {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -120,50 +120,45 @@
   .header-link:hover { color: var(--cream); }
 
   .btn-ghost {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--cream);
-    background: none;
-    border: 1px solid rgba(240,230,211,0.3);
-    padding: 10px 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 11px 22px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
     text-decoration: none;
     display: inline-block;
   }
 
-  .btn-ghost:hover { border-color: var(--cream); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.2); color: #fff; }
 
   .btn-fire {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--char);
-    background: linear-gradient(135deg, var(--ember) 0%, var(--flame) 50%, var(--gold) 100%);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 45%, #f97316 100%);
     border: none;
-    padding: 11px 24px;
+    border-radius: 8px;
+    padding: 12px 24px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: box-shadow 0.2s, transform 0.18s;
     text-decoration: none;
     display: inline-block;
     position: relative;
-    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 18px rgba(194,65,12,0.28);
   }
 
-  .btn-fire::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--flame) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .btn-fire:hover::after { opacity: 1; }
-  .btn-fire span { position: relative; z-index: 1; font-weight: 700; }
+  .btn-fire:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 30px rgba(234,88,12,0.45); transform: translateY(-1px); }
+  .btn-fire span { font-family: inherit; color: inherit; font-weight: 700; }
 
   /* ─── HERO ──────────────────────────────────── */
   .hero {
@@ -183,14 +178,14 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(201,74,26,0.2) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 20% 60%, rgba(212,160,23,0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 40% 40% at 80% 60%, rgba(232,114,26,0.06) 0%, transparent 50%);
+      radial-gradient(ellipse 70% 50% at 50% 110%, rgba(194,65,12,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 60%, rgba(249,115,22,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 80% 60%, rgba(234,88,12,0.05) 0%, transparent 50%);
     pointer-events: none;
   }
 
   .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 5px;
     text-transform: uppercase;
@@ -212,10 +207,10 @@
   }
 
   .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: clamp(52px, 8vw, 110px);
-    line-height: 0.92;
-    letter-spacing: 4px;
+    line-height: 0.9;
+    letter-spacing: -3px;
     color: var(--cream);
     margin-bottom: 16px;
     position: relative;
@@ -230,7 +225,7 @@
 
   .hero-sub {
     font-size: clamp(16px, 2vw, 22px);
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     max-width: 620px;
     line-height: 1.6;
@@ -248,45 +243,46 @@
   }
 
   .btn-hero-primary {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--char);
-    background: linear-gradient(135deg, var(--ember) 0%, var(--flame) 50%, var(--gold) 100%);
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 45%, #f97316 100%);
     border: none;
-    padding: 18px 40px;
+    border-radius: 10px;
+    padding: 15px 36px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 30px rgba(201,74,26,0.3);
+    transition: box-shadow 0.2s, transform 0.18s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 0 24px rgba(194,65,12,0.32);
   }
 
   .btn-hero-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 40px rgba(201,74,26,0.5);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 40px rgba(234,88,12,0.5);
   }
 
   .btn-hero-secondary {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--cream);
-    background: none;
-    border: 1px solid rgba(240,230,211,0.25);
-    padding: 18px 40px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 15px 36px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    transition: all 0.2s;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
   }
 
-  .btn-hero-secondary:hover { border-color: var(--cream); background: rgba(240,230,211,0.04); }
+  .btn-hero-secondary:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.22); color: #fff; }
 
   .hero-proof {
     display: flex;
@@ -298,7 +294,7 @@
   }
 
   .hero-proof-item {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -328,7 +324,7 @@
   }
 
   .scroll-hint span {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -350,8 +346,8 @@
   /* ─── MARQUEE ───────────────────────────────── */
   .marquee-wrap {
     overflow: hidden;
-    border-top: 1px solid rgba(201,74,26,0.15);
-    border-bottom: 1px solid rgba(201,74,26,0.15);
+    border-top: 1px solid rgba(194,65,12,0.12);
+    border-bottom: 1px solid rgba(194,65,12,0.12);
     background: rgba(26,20,16,0.6);
     padding: 14px 0;
     position: relative;
@@ -366,7 +362,7 @@
   }
 
   .marquee-item {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -397,7 +393,7 @@
   }
 
   .section-label {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -412,13 +408,13 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: rgba(201,74,26,0.2);
+    background: rgba(194,65,12,0.15);
   }
 
   .section-heading {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: clamp(36px, 5vw, 64px);
-    letter-spacing: 3px;
+    letter-spacing: -1px;
     color: var(--cream);
     line-height: 1;
     margin-bottom: 16px;
@@ -428,7 +424,7 @@
 
   .section-body {
     font-size: 18px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     line-height: 1.65;
     max-width: 560px;
@@ -457,12 +453,12 @@
     gap: 20px;
     align-items: flex-start;
     padding: 24px;
-    border: 1px solid rgba(201,74,26,0.12);
+    border: 1px solid rgba(194,65,12,0.1);
     background: rgba(26,20,16,0.4);
     transition: border-color 0.3s;
   }
 
-  .pain-point:hover { border-color: rgba(201,74,26,0.35); }
+  .pain-point:hover { border-color: rgba(194,65,12,0.35); }
 
   .pain-icon {
     font-size: 24px;
@@ -471,7 +467,7 @@
   }
 
   .pain-point-title {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -481,7 +477,7 @@
 
   .pain-point-desc {
     font-size: 15px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     line-height: 1.55;
   }
@@ -498,15 +494,15 @@
 
   .stat-card {
     padding: 32px;
-    border: 1px solid rgba(201,74,26,0.2);
-    background: linear-gradient(135deg, rgba(201,74,26,0.06) 0%, transparent 60%);
+    border: 1px solid rgba(194,65,12,0.15);
+    background: linear-gradient(135deg, rgba(194,65,12,0.05) 0%, transparent 60%);
   }
 
   .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 72px;
     line-height: 1;
-    letter-spacing: 2px;
+    letter-spacing: -3px;
     background: linear-gradient(135deg, var(--flame), var(--gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -514,7 +510,7 @@
   }
 
   .stat-label {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -524,7 +520,7 @@
 
   .stat-desc {
     font-size: 15px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     margin-top: 8px;
     line-height: 1.5;
@@ -551,7 +547,7 @@
   .feature-card {
     padding: 48px;
     background: rgba(26,20,16,0.5);
-    border: 1px solid rgba(201,74,26,0.1);
+    border: 1px solid rgba(194,65,12,0.08);
     position: relative;
     overflow: hidden;
     transition: border-color 0.3s;
@@ -569,7 +565,7 @@
     transition: opacity 0.3s;
   }
 
-  .feature-card:hover { border-color: rgba(201,74,26,0.3); }
+  .feature-card:hover { border-color: rgba(194,65,12,0.25); }
   .feature-card:hover::before { opacity: 1; }
 
   .feature-card-icon {
@@ -579,7 +575,7 @@
   }
 
   .feature-card-tag {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -588,16 +584,16 @@
   }
 
   .feature-card-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 28px;
-    letter-spacing: 2px;
+    letter-spacing: -0.5px;
     color: var(--cream);
     margin-bottom: 12px;
   }
 
   .feature-card-desc {
     font-size: 16px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     line-height: 1.6;
     margin-bottom: 20px;
@@ -605,9 +601,9 @@
 
   .feature-card-example {
     background: rgba(10,8,5,0.6);
-    border: 1px solid rgba(212,160,23,0.15);
+    border: 1px solid rgba(249,115,22,0.15);
     padding: 16px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     color: var(--cream);
     line-height: 1.7;
@@ -628,8 +624,8 @@
   .tools-grid-section {
     padding: 80px 60px;
     background: rgba(26,20,16,0.3);
-    border-top: 1px solid rgba(201,74,26,0.1);
-    border-bottom: 1px solid rgba(201,74,26,0.1);
+    border-top: 1px solid rgba(194,65,12,0.08);
+    border-bottom: 1px solid rgba(194,65,12,0.08);
   }
 
   .tools-grid-inner {
@@ -650,7 +646,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1px;
-    background: rgba(201,74,26,0.08);
+    background: rgba(194,65,12,0.08);
   }
 
   .tool-tile {
@@ -664,7 +660,7 @@
 
   .tool-tile:hover {
     background: rgba(26,20,16,0.9);
-    border-color: rgba(201,74,26,0.25);
+    border-color: rgba(194,65,12,0.25);
     z-index: 1;
   }
 
@@ -675,7 +671,7 @@
   }
 
   .tool-tile-name {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -685,7 +681,7 @@
 
   .tool-tile-desc {
     font-size: 13px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     line-height: 1.5;
   }
@@ -694,7 +690,7 @@
     position: absolute;
     top: 16px;
     right: 16px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 7px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -724,7 +720,7 @@
   .how-step {
     padding: 48px 40px;
     background: rgba(26,20,16,0.4);
-    border: 1px solid rgba(201,74,26,0.1);
+    border: 1px solid rgba(194,65,12,0.08);
     position: relative;
     overflow: hidden;
   }
@@ -740,10 +736,10 @@
   }
 
   .how-step-num {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 100px;
     line-height: 0.85;
-    color: rgba(201,74,26,0.07);
+    color: rgba(194,65,12,0.07);
     position: absolute;
     top: 16px;
     right: 20px;
@@ -752,9 +748,9 @@
   }
 
   .how-step-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 26px;
-    letter-spacing: 2px;
+    letter-spacing: -0.5px;
     color: var(--cream);
     margin-bottom: 12px;
     position: relative;
@@ -762,7 +758,7 @@
 
   .how-step-desc {
     font-size: 16px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
     line-height: 1.6;
     position: relative;
@@ -772,7 +768,7 @@
   .pricing-section {
     padding: 100px 60px;
     background: rgba(26,20,16,0.3);
-    border-top: 1px solid rgba(201,74,26,0.1);
+    border-top: 1px solid rgba(194,65,12,0.08);
   }
 
   .pricing-inner {
@@ -793,17 +789,17 @@
 
   .pricing-card {
     background: rgba(26,20,16,0.6);
-    border: 1px solid rgba(201,74,26,0.12);
+    border: 1px solid rgba(194,65,12,0.1);
     padding: 40px 32px;
     position: relative;
     transition: border-color 0.3s;
   }
 
-  .pricing-card:hover { border-color: rgba(201,74,26,0.35); }
+  .pricing-card:hover { border-color: rgba(194,65,12,0.35); }
 
   .pricing-card.featured {
-    border-color: rgba(201,74,26,0.4);
-    background: rgba(201,74,26,0.06);
+    border-color: rgba(234,88,12,0.35);
+    background: rgba(194,65,12,0.05);
   }
 
   .pricing-card.featured::before {
@@ -812,7 +808,7 @@
     top: -1px;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 7px;
     letter-spacing: 3px;
     background: var(--ember);
@@ -822,18 +818,18 @@
   }
 
   .pricing-plan {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 32px;
-    letter-spacing: 4px;
+    letter-spacing: -0.5px;
     color: var(--cream);
     margin-bottom: 4px;
   }
 
   .pricing-price {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 52px;
     line-height: 1;
-    letter-spacing: 2px;
+    letter-spacing: -2px;
     color: var(--flame);
     margin-bottom: 4px;
   }
@@ -844,7 +840,7 @@
   }
 
   .pricing-cadence {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -854,7 +850,7 @@
 
   .pricing-divider {
     height: 1px;
-    background: rgba(201,74,26,0.15);
+    background: rgba(194,65,12,0.12);
     margin-bottom: 24px;
   }
 
@@ -888,7 +884,7 @@
   .btn-plan {
     display: block;
     width: 100%;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -903,7 +899,7 @@
 
   .btn-plan-ghost {
     background: none;
-    border: 1px solid rgba(201,74,26,0.3);
+    border: 1px solid rgba(194,65,12,0.25);
     color: var(--cream);
   }
 
@@ -911,7 +907,7 @@
 
   .btn-plan-fire {
     background: linear-gradient(135deg, var(--ember), var(--flame));
-    color: var(--char);
+    color: #fff;
   }
 
   .btn-plan-fire:hover { filter: brightness(1.1); }
@@ -920,7 +916,7 @@
     text-align: center;
     margin-top: 32px;
     font-size: 14px;
-    font-style: italic;
+    font-style: normal;
     color: var(--dim);
   }
 
@@ -936,7 +932,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,74,26,0.15) 0%, transparent 60%);
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(194,65,12,0.12) 0%, transparent 60%);
     pointer-events: none;
   }
 
@@ -962,7 +958,7 @@
 
   .cta-subtext {
     margin-top: 20px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -973,7 +969,7 @@
   /* ─── FOOTER ────────────────────────────────── */
   footer {
     padding: 48px 60px;
-    border-top: 1px solid rgba(201,74,26,0.15);
+    border-top: 1px solid rgba(194,65,12,0.12);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -982,7 +978,7 @@
   }
 
   .footer-logo-word {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 28px;
     letter-spacing: 6px;
     background: linear-gradient(135deg, var(--flame) 0%, var(--gold) 100%);
@@ -992,7 +988,7 @@
   }
 
   .footer-logo-sub {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 3px;
     color: var(--dim);
@@ -1007,7 +1003,7 @@
   }
 
   .footer-link {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -1019,7 +1015,7 @@
   .footer-link:hover { color: var(--cream); }
 
   .footer-copy {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 8px;
     letter-spacing: 1px;
     color: var(--dim);
